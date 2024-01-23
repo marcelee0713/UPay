@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "546368602278",
+    "project_id": "upay-259b7",
+    "storage_bucket": "upay-259b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546368602278:android:a8feff8c3ce98193577467",
+        "android_client_info": {
+          "package_name": "com.example.citefest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGQnI9frEsL2lz2k7GFSYrvw9vySAJL5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
