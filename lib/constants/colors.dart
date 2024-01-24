@@ -8,5 +8,5 @@ class ColorPalette {
   static const Color accent = Color(0xff7db2e9);
   static const Color accentWhite = Color.fromARGB(255, 255, 255, 255);
   static const Color accentBlack = Colors.black;
-  static const Color errorColor = Color(0xffE05353);
+  static const Color bgColor = Color(0xffF1FDF8);
 }
