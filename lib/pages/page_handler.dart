@@ -28,7 +28,7 @@ class _PageHandlerState extends State<PageHandler> {
       backgroundColor: ColorPalette.bgColor,
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          height: 65,
+          height: 72,
           decoration: const BoxDecoration(
             color: ColorPalette.accentWhite,
           ),
@@ -98,14 +98,20 @@ class _PageHandlerState extends State<PageHandler> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: ColorPalette.primary,
-        child: Image.asset(
-          "assets/images/icons/scan.png",
-          height: 30,
-          width: 30,
-          color: ColorPalette.accentWhite,
+      floatingActionButton: SizedBox(
+        height: 70,
+        width: 70,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: ColorPalette.primary,
+            child: Image.asset(
+              "assets/images/icons/scan.png",
+              height: 30,
+              width: 30,
+              color: ColorPalette.accentWhite,
+            ),
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
