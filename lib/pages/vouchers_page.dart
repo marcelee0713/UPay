@@ -1,3 +1,7 @@
+import 'package:citefest/constants/colors.dart';
+import 'package:citefest/widgets/universal/sub_section_info.dart';
+import 'package:citefest/widgets/universal/user_status_bar.dart';
+import 'package:citefest/widgets/vouchers/voucher_box.dart';
 import 'package:flutter/material.dart';
 
 class VoucherPage extends StatefulWidget {
@@ -8,89 +12,166 @@ class VoucherPage extends StatefulWidget {
 }
 
 class _VoucherPageState extends State<VoucherPage> {
-  // Custom data structure to hold voucher information
-  List<VoucherType> voucherTypes = [
-    VoucherType('Academic Voucher', ['Voucher 1', 'Voucher 2', 'Voucher 3']),
-    VoucherType('Non-Academic Voucher', ['Voucher A', 'Voucher B', 'Voucher C', 'Voucher D']),
-    VoucherType('In-App Voucher', ['Voucher X', 'Voucher Y']),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: ListView(
+        shrinkWrap: true,
         children: [
-          // Small static container at the top
-          Container(
-            height: 150,
-            color: Colors.blue,
-            child: const Center(
-              child: Text(
-                'Static Container',
-                style: TextStyle(color: Colors.white),
+          const SizedBox(height: 20),
+          HeaderBar(
+            subText: "spend wise and use",
+            headText: "Your Vouchers",
+            onPressProfile: () {},
+            onPressNotif: () {},
+          ),
+          const SizedBox(height: 20),
+          const SubSectionInfo(
+            iconPath: "assets/images/icons/coins.png",
+            leftHeadText: "Top Up now",
+            leftSubText: "earn more rewards",
+            rightHeadText: "up to 50% off",
+            rightSubText: "no minimum spend",
+          ),
+          const SizedBox(height: 30),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Academic Vouchers",
+                style: TextStyle(
+                  color: ColorPalette.accentBlack,
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
               ),
-            ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemCount: acadVouchs().length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return VoucherBox(
+                      headText: acadVouchs()[index].headText,
+                      desc: acadVouchs()[index].desc,
+                      holder: acadVouchs()[index].holderName,
+                      imagePath: "assets/images/icons/worktimecuate.png",
+                      onTap: () {},
+                    );
+                  },
+                ),
+              )
+            ],
           ),
-
-          // Scrollable container at the bottom half
-          Expanded(
-            child: ListView.builder(
-              itemCount: voucherTypes.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Voucher Type Container
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        voucherTypes[index].name,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-
-                    // Voucher List within Voucher Type
-                    Container(
-                      height: 150,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: voucherTypes[index].vouchers.length,
-                        itemBuilder: (BuildContext context, int subIndex) {
-                          return GestureDetector(
-                            onTap: () {
-                              // Handle tap on voucher
-                              print('Tapped on ${voucherTypes[index].name}, ${voucherTypes[index].vouchers[subIndex]}');
-                            },
-                            child: Container(
-                              width: 100,
-                              margin: EdgeInsets.all(8),
-                              color: Colors.grey,
-                              child: Center(
-                                child: Text(
-                                  voucherTypes[index].vouchers[subIndex],
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Non-Academic Vouchers",
+                style: TextStyle(
+                  color: ColorPalette.accentBlack,
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemCount: nonAcadVouchs().length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return VoucherBox(
+                      headText: nonAcadVouchs()[index].headText,
+                      desc: nonAcadVouchs()[index].desc,
+                      holder: nonAcadVouchs()[index].holderName,
+                      imagePath: "assets/images/icons/selfcheckoutriki.png",
+                      onTap: () {},
+                    );
+                  },
+                ),
+              )
+            ],
           ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Non-Academic Vouchers",
+                style: TextStyle(
+                  color: ColorPalette.accentBlack,
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemCount: inAppVouchers().length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return VoucherBox(
+                      headText: inAppVouchers()[index].headText,
+                      desc: inAppVouchers()[index].desc,
+                      holder: inAppVouchers()[index].holderName,
+                      imagePath: "assets/images/icons/creditcardcuate.png",
+                      onTap: () {},
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );
+  }
+
+  List<VoucherType> acadVouchs() {
+    List<VoucherType> list = [
+      VoucherType("PHINMA-UPANG", "10% off", "any academic related fees."),
+      VoucherType("PHINMA-UPANG", "10% off", "any academic related fees."),
+      VoucherType("PHINMA-UPANG", "10% off", "any academic related fees."),
+    ];
+    return list;
+  }
+
+  List<VoucherType> nonAcadVouchs() {
+    List<VoucherType> list = [
+      VoucherType(
+          "Student Plaza", "25% off", "on any food products at Student Plaza."),
+      VoucherType(
+          "Student Plaza", "25% off", "on any food products at Student Plaza."),
+      VoucherType(
+          "Student Plaza", "25% off", "on any food products at Student Plaza."),
+    ];
+    return list;
+  }
+
+  List<VoucherType> inAppVouchers() {
+    List<VoucherType> list = [
+      VoucherType("UPay", "Free transaction fee", "on any UPay Transactions."),
+      VoucherType("UPay", "Free transaction fee", "on any UPay Transactions."),
+      VoucherType("UPay", "Free transaction fee", "on any UPay Transactions."),
+    ];
+    return list;
   }
 }
 
 // Custom data structure to hold voucher information
 class VoucherType {
-  final String name;
-  final List<String> vouchers;
+  final String holderName;
+  final String headText;
+  final String desc;
 
-  VoucherType(this.name, this.vouchers);
+  VoucherType(this.holderName, this.headText, this.desc);
 }
