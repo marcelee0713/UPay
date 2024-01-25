@@ -37,12 +37,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
-  syncfusion_flutter_charts: ^24.1.47+1
+  syncfusion_flutter_charts: ^20.4.49
   flutter_spinkit: ^5.2.0
   hive: ^2.2.3
   pinput: ^2.2.21
   hive_flutter: ^1.1.0
   persistent_bottom_nav_bar: ^5.0.2
+  indexed: ^0.0.8
 
 dev_dependencies:
   flutter_test:
