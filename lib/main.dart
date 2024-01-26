@@ -1,6 +1,7 @@
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/firebase_options.dart';
 import 'package:citefest/pages/page_handler.dart';
+import 'package:citefest/pages/testpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           secondary: ColorPalette.secondary,
         ),
       ),
-      home: const SafeArea(child: PageHandler()),
+      home: const SafeArea(child: TestPage()),
     );
   }
 }
