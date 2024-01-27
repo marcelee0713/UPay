@@ -2,18 +2,20 @@ import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/auth/mpin_button.dart';
+import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-class EnterMPINPage extends StatefulWidget {
-  const EnterMPINPage({super.key});
+class CreateMPINPage extends StatefulWidget {
+  const CreateMPINPage({super.key});
 
   @override
-  State<EnterMPINPage> createState() => _EnterMPINPageState();
+  State<CreateMPINPage> createState() => _CreateMPINPageState();
 }
 
-class _EnterMPINPageState extends State<EnterMPINPage> {
+class _CreateMPINPageState extends State<CreateMPINPage> {
   TextEditingController controller = TextEditingController(text: "");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +30,14 @@ class _EnterMPINPageState extends State<EnterMPINPage> {
             ArrowBack(onTap: () {}),
             const SizedBox(height: 20),
             const AuthInfo(
-                headText: "Enter your MPIN",
-                subText: "do not share your MPIN to anyone"),
+                headText: "Nominate a MPIN",
+                subText: "to ensure your safety please enroll a MPIN"),
             const SizedBox(height: 30),
             Pinput(
               length: 4,
               readOnly: true,
               controller: controller,
               autofocus: true,
-              obscureText: true,
               defaultPinTheme: PinTheme(
                 width: 70,
                 height: 70,
@@ -67,23 +68,15 @@ class _EnterMPINPageState extends State<EnterMPINPage> {
                 ),
               ),
               onCompleted: (value) {
-                debugPrint(value);
+                DialogInfo(
+                  headerText: "Confirm MPIN",
+                  subText: "Are you sure you want to use this as your MPIN?",
+                  confirmText: "Confirm",
+                  onCancel: () =>
+                      Navigator.of(context, rootNavigator: true).pop(),
+                  onConfirm: () {},
+                ).build(context);
               },
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                child: const Text(
-                  "forgot MPIN?",
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: ColorPalette.primary,
-                  ),
-                ),
-                onTap: () {},
-              ),
             ),
             const SizedBox(height: 20),
             Center(

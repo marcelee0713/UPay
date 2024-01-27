@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           secondary: ColorPalette.secondary,
         ),
       ),
-      home: const SafeArea(child: PageHandler()),
+      home: const SafeArea(child: TestPage()),
     );
   }
 }
