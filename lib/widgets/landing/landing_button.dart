@@ -7,17 +7,22 @@ class LandingButton extends StatelessWidget {
   final String buttonName;
   final String filePath;
   final VoidCallback onTap;
+  final double iconHeight;
+  final double iconWidth;
   const LandingButton(
       {super.key,
       required this.buttonName,
       required this.filePath,
-      required this.onTap});
+      required this.onTap,
+      required this.iconHeight,
+      required this.iconWidth});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         height: 50,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
         decoration: BoxDecoration(
           color: ColorPalette.accentWhite,
           borderRadius: BorderRadius.circular(8),
@@ -28,19 +33,19 @@ class LandingButton extends StatelessWidget {
               blurRadius: 2,
               offset: const Offset(
                 0,
-                4,
+                2,
               ),
             ),
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
               filePath,
-              height: 25,
-              width: 25,
+              height: iconHeight,
+              width: iconWidth,
               color: ColorPalette.primary,
             ),
             const SizedBox(width: 3),
@@ -49,8 +54,8 @@ class LandingButton extends StatelessWidget {
               style: const TextStyle(
                 color: ColorPalette.accentBlack,
                 fontFamily: "Montserrat",
-                fontWeight: FontWeight.w700,
-                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                fontSize: 10,
               ),
             ),
           ],

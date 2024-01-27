@@ -49,7 +49,7 @@ class _VoucherPageState extends State<VoucherPage> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 200,
+                height: 178,
                 child: ListView.builder(
                   itemCount: acadVouchs().length,
                   scrollDirection: Axis.horizontal,
@@ -58,7 +58,7 @@ class _VoucherPageState extends State<VoucherPage> {
                       headText: acadVouchs()[index].headText,
                       desc: acadVouchs()[index].desc,
                       holder: acadVouchs()[index].holderName,
-                      imagePath: "assets/images/icons/worktimecuate.png",
+                      imagePath: "assets/images/icons/worktimecuate-1.png",
                       onTap: () {},
                     );
                   },
@@ -81,7 +81,7 @@ class _VoucherPageState extends State<VoucherPage> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 200,
+                height: 178,
                 child: ListView.builder(
                   itemCount: nonAcadVouchs().length,
                   scrollDirection: Axis.horizontal,
@@ -90,7 +90,7 @@ class _VoucherPageState extends State<VoucherPage> {
                       headText: nonAcadVouchs()[index].headText,
                       desc: nonAcadVouchs()[index].desc,
                       holder: nonAcadVouchs()[index].holderName,
-                      imagePath: "assets/images/icons/selfcheckoutriki.png",
+                      imagePath: "assets/images/icons/selfcheckoutriki-1.png",
                       onTap: () {},
                     );
                   },
@@ -113,7 +113,7 @@ class _VoucherPageState extends State<VoucherPage> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 200,
+                height: 178,
                 child: ListView.builder(
                   itemCount: inAppVouchers().length,
                   scrollDirection: Axis.horizontal,
@@ -122,7 +122,7 @@ class _VoucherPageState extends State<VoucherPage> {
                       headText: inAppVouchers()[index].headText,
                       desc: inAppVouchers()[index].desc,
                       holder: inAppVouchers()[index].holderName,
-                      imagePath: "assets/images/icons/creditcardcuate.png",
+                      imagePath: "assets/images/icons/creditcardcuate-1.png",
                       onTap: () {},
                     );
                   },

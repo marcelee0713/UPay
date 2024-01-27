@@ -35,7 +35,7 @@ class TransactionBox extends StatelessWidget {
               blurRadius: 2,
               offset: const Offset(
                 0,
-                4,
+                2,
               ),
             ),
           ],
@@ -62,7 +62,7 @@ class TransactionBox extends StatelessWidget {
                   style: const TextStyle(
                     color: ColorPalette.accentBlack,
                     fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
                 ),
@@ -87,7 +87,7 @@ class TransactionBox extends StatelessWidget {
                         ? ColorPalette.primary
                         : ColorPalette.errorColor,
                     fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
                 ),

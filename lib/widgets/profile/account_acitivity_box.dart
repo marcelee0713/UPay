@@ -5,11 +5,13 @@ class ActivityBox extends StatelessWidget {
   final String name;
   final String filePath;
   final VoidCallback onTap;
+  final double iconSize;
   const ActivityBox(
       {super.key,
       required this.name,
       required this.filePath,
-      required this.onTap});
+      required this.onTap,
+      required this.iconSize});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class ActivityBox extends StatelessWidget {
               children: [
                 Image.asset(
                   filePath,
-                  height: 30,
-                  width: 30,
+                  height: iconSize,
+                  width: iconSize,
                   color: ColorPalette.skyBlue,
                 ),
                 const SizedBox(

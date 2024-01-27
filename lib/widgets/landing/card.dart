@@ -15,7 +15,7 @@ class _StudentCardState extends State<StudentCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 180,
       padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -50,7 +50,7 @@ class _StudentCardState extends State<StudentCard> {
               fontSize: 12,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 14),
           Text(
             widget.cardNumber,
             style: const TextStyle(
@@ -65,7 +65,6 @@ class _StudentCardState extends State<StudentCard> {
             alignment: Alignment.centerRight,
             child: Image.asset("assets/images/icons/upayoncard.png"),
           ),
-          const SizedBox(height: 15),
           Align(
             alignment: Alignment.bottomLeft,
             child: Column(
@@ -85,7 +84,7 @@ class _StudentCardState extends State<StudentCard> {
                   style: const TextStyle(
                     color: ColorPalette.accentWhite,
                     fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
                 ),

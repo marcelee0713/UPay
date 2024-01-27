@@ -24,7 +24,7 @@ class _LandingPageState extends State<LandingPage> {
           const SizedBox(height: 20),
           HeaderBar(
             subText: "welcome back",
-            headText: "Grace Magicarp",
+            headText: "Abdul Jabol",
             onPressProfile: () {},
             onPressNotif: () {},
           ),
@@ -45,6 +45,8 @@ class _LandingPageState extends State<LandingPage> {
               LandingButton(
                 buttonName: "Top Up",
                 filePath: "assets/images/icons/top-up.png",
+                iconHeight: 28,
+                iconWidth: 28,
                 onTap: () {},
               ),
               const SizedBox(width: 10),
@@ -52,22 +54,26 @@ class _LandingPageState extends State<LandingPage> {
                 buttonName: "Transfer",
                 filePath: "assets/images/icons/transfer.png",
                 onTap: () {},
+                iconHeight: 25,
+                iconWidth: 25,
               ),
               const SizedBox(width: 10),
               LandingButton(
                 buttonName: "Rewards",
                 filePath: "assets/images/icons/coins.png",
                 onTap: () {},
+                iconHeight: 21,
+                iconWidth: 21,
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Column(
+          const SizedBox(height: 30),
+          const Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     "Recent Transactions",
                     style: TextStyle(
@@ -77,19 +83,10 @@ class _LandingPageState extends State<LandingPage> {
                       fontSize: 14,
                     ),
                   ),
-                  Text(
-                    "view all",
-                    style: TextStyle(
-                      color: ColorPalette.accentBlack,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12,
-                    ),
-                  ),
                 ],
               ),
-              const SizedBox(height: 20),
-              const TransactionContainer()
+              SizedBox(height: 15),
+              TransactionContainer()
             ],
           ),
           const SizedBox(height: 20),

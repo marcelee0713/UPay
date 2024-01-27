@@ -21,7 +21,7 @@ class VoucherBox extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(5),
-        height: 170,
+        height: 190,
         width: 190,
         decoration: BoxDecoration(
           color: ColorPalette.accentWhite,
@@ -42,7 +42,7 @@ class VoucherBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 85,
+              height: 95,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
@@ -54,7 +54,7 @@ class VoucherBox extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 7),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Column(

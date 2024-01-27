@@ -58,7 +58,7 @@ class SubSectionInfo extends StatelessWidget {
                     style: const TextStyle(
                       color: ColorPalette.accentWhite,
                       fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                       fontSize: 10,
                     ),
                   ),
@@ -85,7 +85,7 @@ class SubSectionInfo extends StatelessWidget {
                 style: const TextStyle(
                   color: ColorPalette.accentWhite,
                   fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
               ),
