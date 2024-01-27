@@ -21,11 +21,12 @@ class ActivityBox extends StatelessWidget {
         children: [
           Expanded(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   filePath,
                   height: iconSize,
-                  width: iconSize,
+                  width: 25,
                   color: ColorPalette.skyBlue,
                 ),
                 const SizedBox(
@@ -46,6 +47,7 @@ class ActivityBox extends StatelessWidget {
           const Icon(
             Icons.arrow_forward_ios_rounded,
             size: 25,
+            color: Color(0xff585858),
           ),
         ],
       ),

@@ -8,16 +8,19 @@ class MPINBUtton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: onTap,
-        child: Text(
-          textName,
-          style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-            color: ColorPalette.accentBlack,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: Colors.transparent,
+        child: Center(
+          child: Text(
+            textName,
+            style: const TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              color: ColorPalette.accentBlack,
+            ),
           ),
         ),
       ),

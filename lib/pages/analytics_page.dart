@@ -33,6 +33,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
           const SizedBox(height: 20),

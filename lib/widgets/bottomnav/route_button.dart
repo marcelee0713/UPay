@@ -38,7 +38,7 @@ class _RouteButtonState extends State<RouteButton> {
               width: 25,
               color: widget.currentIndex == widget.routeIndex
                   ? ColorPalette.primary
-                  : ColorPalette.accentBlack,
+                  : const Color(0xff585858),
             ),
             const SizedBox(height: 2.5),
             Text(
@@ -46,7 +46,7 @@ class _RouteButtonState extends State<RouteButton> {
               style: TextStyle(
                 color: widget.currentIndex == widget.routeIndex
                     ? ColorPalette.primary
-                    : ColorPalette.accentBlack,
+                    : const Color(0xff585858),
                 fontWeight: FontWeight.w300,
                 fontFamily: "Montserrat",
                 fontSize: 10,

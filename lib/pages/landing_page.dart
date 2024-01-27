@@ -19,6 +19,7 @@ class _LandingPageState extends State<LandingPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
           const SizedBox(height: 20),
@@ -68,12 +69,12 @@ class _LandingPageState extends State<LandingPage> {
             ],
           ),
           const SizedBox(height: 30),
-          const Column(
+          Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text(
                     "Recent Transactions",
                     style: TextStyle(
@@ -85,8 +86,8 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 15),
-              TransactionContainer()
+              const SizedBox(height: 15),
+              const TransactionContainer()
             ],
           ),
           const SizedBox(height: 20),

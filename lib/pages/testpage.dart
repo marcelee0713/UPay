@@ -1,5 +1,5 @@
 import 'package:citefest/constants/colors.dart';
-import 'package:citefest/pages/create_mpin_page.dart';
+import 'package:citefest/pages/enter_mpin_page.dart';
 import 'package:citefest/pages/log_in_page.dart';
 import 'package:citefest/pages/mpin_page.dart';
 import 'package:citefest/pages/registration_page.dart';
@@ -37,8 +37,8 @@ class _TestPageState extends State<TestPage> {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const CreateMPINPage())),
-              child: const Text("Create MPIN Page"),
+                      builder: (context) => const EnterMPINPage())),
+              child: const Text("Enter MPIN Page"),
             ),
             ElevatedButton(
               onPressed: () => Navigator.push(context,
@@ -48,7 +48,7 @@ class _TestPageState extends State<TestPage> {
             ElevatedButton(
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const MPinPage())),
-              child: const Text("Enter MPIN Page"),
+              child: const Text("Create MPIN Page"),
             ),
           ],
         ),

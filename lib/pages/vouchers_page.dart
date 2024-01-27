@@ -17,7 +17,7 @@ class _VoucherPageState extends State<VoucherPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView(
-        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 20),
           HeaderBar(

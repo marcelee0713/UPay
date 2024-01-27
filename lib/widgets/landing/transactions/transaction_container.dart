@@ -10,6 +10,7 @@ class TransactionContainer extends StatelessWidget {
     return SizedBox(
       height: 175,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: getList().length,
         itemBuilder: (context, index) {
           return TransactionBox(

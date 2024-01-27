@@ -5,14 +5,14 @@ import 'package:citefest/widgets/universal/auth/mpin_button.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
-class CreateMPINPage extends StatefulWidget {
-  const CreateMPINPage({super.key});
+class EnterMPINPage extends StatefulWidget {
+  const EnterMPINPage({super.key});
 
   @override
-  State<CreateMPINPage> createState() => _CreateMPINPageState();
+  State<EnterMPINPage> createState() => _EnterMPINPageState();
 }
 
-class _CreateMPINPageState extends State<CreateMPINPage> {
+class _EnterMPINPageState extends State<EnterMPINPage> {
   TextEditingController controller = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
       body: Container(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           children: [
             const SizedBox(height: 20),
@@ -32,15 +33,30 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
             const SizedBox(height: 30),
             Pinput(
               length: 4,
-              showCursor: true,
               readOnly: true,
               controller: controller,
+              autofocus: true,
               defaultPinTheme: PinTheme(
                 width: 70,
                 height: 70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xffd9d9d9),
+                  color: const Color(0xffE8E8E8),
+                ),
+                textStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                  color: ColorPalette.accentBlack,
+                ),
+              ),
+              focusedPinTheme: PinTheme(
+                height: 70,
+                width: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xffE8E8E8),
+                  border: Border.all(color: ColorPalette.primary, width: 2),
                 ),
                 textStyle: const TextStyle(
                   fontFamily: 'Montserrat',
@@ -71,8 +87,9 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
             const SizedBox(height: 20),
             Center(
               child: SizedBox(
-                height: 450,
+                height: 300,
                 child: GridView.count(
+                  childAspectRatio: (1 / .7),
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 3,
                   children: [
@@ -121,7 +138,7 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
             icon: const Icon(
               Icons.backspace,
               color: ColorPalette.primary,
-              size: 40,
+              size: 25,
             ),
           ),
         );
