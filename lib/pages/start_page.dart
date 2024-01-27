@@ -7,8 +7,105 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorPalette.bgColor,
-      body: Container(),
+      backgroundColor: const Color(0xff1d1d1d),
+      body: Column(
+        children: [
+          Image.asset(
+            "assets/images/icons/Manage money-amico.png",
+            height: 450,
+            width: 450,
+            fit: BoxFit.cover,
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: const [
+                      Text(
+                        "Easy Way",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          color: ColorPalette.accentWhite,
+                        ),
+                      ),
+                      Text(
+                        "to manage",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          color: ColorPalette.accentWhite,
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          text: "your ",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 32,
+                            fontWeight: FontWeight.w800,
+                            color: ColorPalette.accentWhite,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "money",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 32,
+                                fontWeight: FontWeight.w800,
+                                color: ColorPalette.primary,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "Experience seamless and secure transactions putting your finances at your fingertips.",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: ColorPalette.accentWhite,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorPalette.primary,
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: const Text(
+                        "Get Started",
+                        style: TextStyle(
+                          color: ColorPalette.accentWhite,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

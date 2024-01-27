@@ -27,8 +27,9 @@ class ProfileDetailsBox extends StatelessWidget {
         ],
         gradient: const LinearGradient(
           colors: [
-            ColorPalette.skyBlue,
-            ColorPalette.primary,
+            Color(0xff6282E4),
+            Color(0xff6F99E6),
+            Color(0xff7DB2E9),
           ],
         ),
       ),
