@@ -12,6 +12,7 @@ class ArrowBack extends StatelessWidget {
         onPressed: onTap,
         icon: const Icon(
           Icons.arrow_back_outlined,
+          color: Color(0xff585858),
           size: 30,
         ),
       ),
