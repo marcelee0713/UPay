@@ -84,7 +84,7 @@ class StartPage extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorPalette.primary,
-                        padding: EdgeInsets.symmetric(vertical: 18),
+                        padding: const EdgeInsets.symmetric(vertical: 18),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
@@ -92,7 +92,7 @@ class StartPage extends StatelessWidget {
                       child: const Text(
                         "Get Started",
                         style: TextStyle(
-                          color: ColorPalette.accentWhite,
+                          color: Color.fromARGB(255, 235, 229, 229),
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
