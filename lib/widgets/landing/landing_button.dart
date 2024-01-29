@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:citefest/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +20,7 @@ class LandingButton extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 50,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
         decoration: BoxDecoration(
           color: ColorPalette.accentWhite,
           borderRadius: BorderRadius.circular(8),

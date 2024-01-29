@@ -1,4 +1,3 @@
-import 'package:citefest/constants/strings.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
 import 'package:citefest/constants/colors.dart';
@@ -62,7 +61,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             shrinkWrap: true,
             children: [
               const SizedBox(height: 20),
-              ArrowBack(onTap: () {}),
+              ArrowBack(onTap: () => Navigator.pop(context)),
               const SizedBox(height: 20),
               const AuthInfo(
                   headText: "Create an account",
@@ -419,5 +418,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
     } else {
       return "Password not match";
     }
+  }
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    birthdayController.dispose();
+    studentIdController.dispose();
+    phoneNumberController.dispose();
+    emailAddressController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 }

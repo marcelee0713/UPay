@@ -1,5 +1,4 @@
 import 'package:citefest/constants/colors.dart';
-import 'package:citefest/pages/registration_page.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,9 @@ class _SignInPageState extends State<SignInPage> {
             shrinkWrap: true,
             children: [
               const SizedBox(height: 20),
-              ArrowBack(onTap: () {}),
+              ArrowBack(
+                  onTap: () => Navigator.pushNamedAndRemoveUntil(
+                      context, "/start", (route) => false)),
               const SizedBox(height: 20),
               const AuthInfo(
                   headText: "Log in your account",
@@ -238,12 +239,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RegistrationPage()));
-                    },
+                    onTap: () => Navigator.pushNamed(context, "/registration"),
                     child: const Text(
                       "Sign up",
                       style: TextStyle(

@@ -1,4 +1,3 @@
-import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/landing/transactions/transaction.box.dart';
 import 'package:flutter/material.dart';
 

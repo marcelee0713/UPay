@@ -81,7 +81,10 @@ class StartPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/login", (route) => false);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorPalette.primary,
                         padding: const EdgeInsets.symmetric(vertical: 18),

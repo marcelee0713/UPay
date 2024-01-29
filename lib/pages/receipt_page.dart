@@ -17,7 +17,7 @@ class ReceiptPage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             const SizedBox(height: 20),
-            ArrowBack(onTap: () {}),
+            ArrowBack(onTap: () => Navigator.pop(context)),
             const SizedBox(height: 2.5),
             const Text(
               "Transfer",

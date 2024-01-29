@@ -8,7 +8,8 @@ import 'package:citefest/pages/start_page.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+  final String? test;
+  const TestPage({super.key, this.test});
 
   @override
   State<TestPage> createState() => _TestPageState();
