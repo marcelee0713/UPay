@@ -57,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
               const AuthInfo(
                   headText: "Log in your account",
                   subText: "new vouchers just for you"),
-              const SizedBox(height: 30),
+              const SizedBox(height: 60),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +175,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     style: const TextStyle(
                       color: ColorPalette.accentBlack,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
