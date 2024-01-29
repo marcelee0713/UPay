@@ -1,8 +1,10 @@
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/profile/account_acitivity_box.dart';
 import 'package:citefest/widgets/profile/profile_details_box.dart';
+import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:citefest/widgets/universal/sub_section_info_closable.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -87,6 +89,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     iconSizeWidth: 25,
                   ),
                   const SizedBox(height: 15),
+                  ActivityBox(
+                      name: "Sign-Out",
+                      filePath: "assets/images/icons/exit.png",
+                      onTap: () async {
+                        DialogInfo(
+                            headerText: "Quit UPay?",
+                            subText: "are you sure to leave the app?",
+                            confirmText: "Confirm",
+                            onCancel:(){
+                              Navigator.of(context,
+                                  rootNavigator: true)
+                                  .pop();
+                            },
+                            onConfirm: () async{
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.of(context,
+                                  rootNavigator: true)
+                                  .pop();
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, "/login", (route) => false);
+                            }
+                        ).build(context) ;
+                      },
+                      iconSizeWidth: 32,
+                      iconSizeHeight: 25,)
                 ],
               )
             ],
