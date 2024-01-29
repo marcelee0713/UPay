@@ -2,6 +2,11 @@ import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../widgets/universal/dialog_loading.dart';
+import '../widgets/universal/dialog_unsuccessful.dart';
+import 'landing_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -64,7 +69,7 @@ class _SignInPageState extends State<SignInPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    " email",
+                    " Email",
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: 14,
@@ -205,6 +210,64 @@ class _SignInPageState extends State<SignInPage> {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
+                  DialogLoading(subtext: "Logging in.")
+                      .buildLoadingScreen(context);
+                  logIn(
+                    email: _inputControllerEmail.text.trim(),
+                    password: _inputControllerPassword.text.trim(),
+                    context: context,
+                  ).catchError(
+                        (err) {
+                      if (err == 'user-not-found') {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        DialogUnsuccessful(
+                          headertext: "User not found!",
+                          subtext: "Seems like we can't find that user.",
+                          textButton: "Close",
+                          callback: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ).buildUnsuccessfulScreen(context);
+                      } else if (err == 'wrong-password') {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        DialogUnsuccessful(
+                          headertext: "Wrong password!",
+                          subtext: "Whoops! You entered a wrong password!",
+                          textButton: "Close",
+                          callback: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ).buildUnsuccessfulScreen(context);
+                      } else {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        DialogUnsuccessful(
+                          headertext: err,
+                          subtext: "Looks like we have an error!",
+                          textButton: "Close",
+                          callback: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ).buildUnsuccessfulScreen(context);
+                      }
+                    },
+                  ).then((value) {
+                    if (value == null) {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      DialogUnsuccessful(
+                        headertext: "Error",
+                        subtext: "Please try again later!",
+                        textButton: "Close",
+                        callback: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      ).buildUnsuccessfulScreen(context);
+                    } else {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const LandingPage()),
+                              (Route<dynamic> route) => false);
+                    }
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   shadowColor: Colors.transparent,
@@ -257,5 +320,23 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+
+  }
+  Future logIn(
+      {required String email, password, required BuildContext context}) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return "Successfully login";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw e.code;
+      } else if (e.code == 'wrong-password') {
+        throw e.code;
+      }
+      throw e.code;
+    }
   }
 }
