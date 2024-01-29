@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       onTap: () async {
                         DialogInfo(
                             headerText: "Quit UPay?",
-                            subText: "are you sure to leave the app?",
+                            subText: "Are you sure to leave the app?",
                             confirmText: "Confirm",
                             onCancel:(){
                               Navigator.of(context,
@@ -108,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   rootNavigator: true)
                                   .pop();
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, "/login", (route) => false);
+                                context, "/start", (route) => false);
                             }
                         ).build(context) ;
                       },
