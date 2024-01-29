@@ -18,7 +18,7 @@ buildLoadingScreen(BuildContext context) {
           child: Center(
             child: Container(
               decoration: const BoxDecoration(
-                color: ColorPalette.secondary,
+                color: ColorPalette.primary,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               height: 200,
@@ -32,14 +32,14 @@ buildLoadingScreen(BuildContext context) {
                     height: 50,
                     child: Center(
                         child: CircularProgressIndicator(
-                          color: ColorPalette.primary,
+                          color: ColorPalette.secondary,
                         )),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     subtext,
                     style: const TextStyle(
-                      color: ColorPalette.primary,
+                      color: ColorPalette.accentWhite,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       fontSize: 14,

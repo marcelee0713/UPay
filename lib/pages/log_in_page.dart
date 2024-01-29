@@ -1,11 +1,10 @@
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
+import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../widgets/universal/dialog_loading.dart';
-import '../widgets/universal/dialog_unsuccessful.dart';
 import 'landing_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -220,47 +219,43 @@ class _SignInPageState extends State<SignInPage> {
                         (err) {
                       if (err == 'user-not-found') {
                         Navigator.of(context, rootNavigator: true).pop();
-                        DialogUnsuccessful(
-                          headertext: "User not found!",
-                          subtext: "Seems like we can't find that user.",
-                          textButton: "Close",
-                          callback: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                        ).buildUnsuccessfulScreen(context);
+                       DialogInfo(
+                           headerText: "Account not found",
+                           subText: "the account name does not exist.",
+                           confirmText: "Try Again",
+                           onCancel:(){},
+                           onConfirm: (){});
+                       build(context);
                       } else if (err == 'wrong-password') {
                         Navigator.of(context, rootNavigator: true).pop();
-                        DialogUnsuccessful(
-                          headertext: "Wrong password!",
-                          subtext: "Whoops! You entered a wrong password!",
-                          textButton: "Close",
-                          callback: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                        ).buildUnsuccessfulScreen(context);
+                        DialogInfo(
+                            headerText: "Invalid email or password",
+                            subText: "please check your credentials.",
+                            confirmText: "Try Again",
+                            onCancel:(){},
+                            onConfirm: (){});
+                        build(context);
                       } else {
                         Navigator.of(context, rootNavigator: true).pop();
-                        DialogUnsuccessful(
-                          headertext: err,
-                          subtext: "Looks like we have an error!",
-                          textButton: "Close",
-                          callback: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                          },
-                        ).buildUnsuccessfulScreen(context);
+                        DialogInfo(
+                            headerText: "Error!",
+                            subText: "something went wrong.",
+                            confirmText: "Try Again",
+                            onCancel:(){},
+                            onConfirm: (){});
+                        build(context);
                       }
                     },
                   ).then((value) {
                     if (value == null) {
                       Navigator.of(context, rootNavigator: true).pop();
-                      DialogUnsuccessful(
-                        headertext: "Error",
-                        subtext: "Please try again later!",
-                        textButton: "Close",
-                        callback: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      ).buildUnsuccessfulScreen(context);
+                      DialogInfo(
+                          headerText: "Error!",
+                          subText: "something went wrong.",
+                          confirmText: "Try Again",
+                          onCancel:(){},
+                          onConfirm: (){});
+                      build(context);
                     } else {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
