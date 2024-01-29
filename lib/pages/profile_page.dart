@@ -3,6 +3,7 @@ import 'package:citefest/widgets/profile/account_acitivity_box.dart';
 import 'package:citefest/widgets/profile/profile_details_box.dart';
 import 'package:citefest/widgets/universal/sub_section_info_closable.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -83,6 +84,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     name: "Change MPIN",
                     filePath: "assets/images/icons/key.png",
                     onTap: () {},
+                    iconSizeHeight: 23,
+                    iconSizeWidth: 25,
+                  ),
+                  const SizedBox(height: 15),
+                  ActivityBox(
+                    name: "Log out",
+                    filePath: "assets/images/icons/key.png",
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/start", (route) => false);
+                    },
                     iconSizeHeight: 23,
                     iconSizeWidth: 25,
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -12,6 +13,8 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  final _myRegBox = Hive.box('myRegistrationBox');
+
   OutlineInputBorder enabledBorder = OutlineInputBorder(
     borderSide: const BorderSide(
       color: Colors.transparent,
@@ -282,6 +285,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               });
             },
           ).build(context);
+          return;
         }
 
         String fullName = fullNameController.text;
@@ -290,6 +294,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
         String phoneNumber = phoneNumberController.text;
         String email = emailAddressController.text;
         String password = confirmPasswordController.text;
+
+        _myRegBox.put("fullName", fullName);
+        _myRegBox.put("birthday", birthday);
+        _myRegBox.put("userId", userId);
+        _myRegBox.put("phoneNumber", phoneNumber);
+        _myRegBox.put("email", email);
+        _myRegBox.put("password", password);
+
+        Navigator.pushNamed(context, "/create-mpin");
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorPalette.primary,

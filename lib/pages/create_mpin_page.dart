@@ -1,9 +1,12 @@
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/models/user.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/auth/mpin_button.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pinput/pinput.dart';
 
 class CreateMPINPage extends StatefulWidget {
@@ -15,6 +18,14 @@ class CreateMPINPage extends StatefulWidget {
 
 class _CreateMPINPageState extends State<CreateMPINPage> {
   TextEditingController controller = TextEditingController(text: "");
+  final myRegBox = Hive.box("myRegistrationBox");
+
+  late String name = myRegBox.get("fullName");
+  late String email = myRegBox.get("email");
+  late String birthday = myRegBox.get("birthday");
+  late String studentNumber = myRegBox.get("userId");
+  late String phoneNumber = myRegBox.get("phoneNumber");
+  late String password = myRegBox.get("password");
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +38,7 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
           shrinkWrap: true,
           children: [
             const SizedBox(height: 20),
-            ArrowBack(onTap: () {}),
+            ArrowBack(onTap: () => Navigator.pop(context)),
             const SizedBox(height: 20),
             const AuthInfo(
                 headText: "Nominate a MPIN",
@@ -74,7 +85,79 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
                   confirmText: "Confirm",
                   onCancel: () =>
                       Navigator.of(context, rootNavigator: true).pop(),
-                  onConfirm: () {},
+                  onConfirm: () async {
+                    // TODO: Arrange the Future/Organized Functions
+                    // TODO: Put loading screens here.
+
+                    UserModel user = UserModel(
+                        name: name,
+                        studentNumber: studentNumber,
+                        email: email,
+                        mpin: value,
+                        birthday: birthday,
+                        phoneNumber: phoneNumber,
+                        balance: "0");
+
+                    await createAccount(user, password).then(
+                      (value) {
+                        Navigator.of(context, rootNavigator: true).pop();
+
+                        myRegBox.put("fullName", "");
+                        myRegBox.put("birthday", "");
+                        myRegBox.put("userId", "");
+                        myRegBox.put("phoneNumber", "");
+                        myRegBox.put("email", "");
+                        myRegBox.put("password", "");
+
+                        // TODO: Populate the database in the Firestore
+
+                        DialogInfo(
+                          headerText: "Success!",
+                          subText: "You have created an account! Log in now!",
+                          confirmText: "Log in",
+                          cancelText: "Go back",
+                          onCancel: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, "/login", (route) => false);
+                          },
+                          onConfirm: () async {
+                            Navigator.of(context, rootNavigator: true).pop();
+
+                            // TODO: Put loading screens here.
+
+                            await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                              email: user.email,
+                              password: password,
+                            );
+
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context, rootNavigator: true).pop();
+                            // ignore: use_build_context_synchronously
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, "/", (route) => false);
+                          },
+                        ).build(context);
+                      },
+                    ).catchError(
+                      (err) {
+                        Navigator.of(context, rootNavigator: true).pop();
+
+                        DialogInfo(
+                          headerText: "Failed!",
+                          subText: "Error $err",
+                          confirmText: "Try again",
+                          onCancel: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                          onConfirm: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        ).build(context);
+                      },
+                    );
+                  },
                 ).build(context);
               },
             ),
@@ -96,6 +179,20 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
         ),
       ),
     );
+  }
+
+  Future<UserCredential> createAccount(UserModel user, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: user.email, password: password);
+
+      return userCredential;
+    } on FirebaseAuthException catch (err) {
+      throw err.message.toString();
+    } catch (err) {
+      throw err.toString();
+    }
   }
 
   void enterMPIN(String pin) {
