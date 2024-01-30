@@ -2,7 +2,6 @@ import 'package:citefest/models/user.dart';
 import 'package:citefest/utils/mpin_hash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class AuthResult {
   UserCredential? userCredential;
@@ -65,9 +64,9 @@ User? getUser() {
   return user;
 }
 
-Future<bool> apiVerifyMPIN(
+Future<String?> apiVerifyMPIN(
     {required String? uid, required String mpinput}) async {
-  if (uid == null) return false;
+  if (uid == null) return null;
 
   try {
     DocumentSnapshot documentSnapshot =
@@ -76,9 +75,9 @@ Future<bool> apiVerifyMPIN(
     if (!documentSnapshot.exists) throw Exception("Error"); // Idk man.
 
     UserModel obj = UserModel.fromSnapshot(documentSnapshot);
-
-    return verifyMPIN(mpinput, obj.salt, obj.mpin);
+    if (verifyMPIN(mpinput, obj.salt, obj.mpin)) return obj.name;
+    return null;
   } catch (err) {
-    return false;
+    return null;
   }
 }

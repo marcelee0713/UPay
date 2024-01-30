@@ -1,20 +1,19 @@
 import 'package:citefest/auth_check.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/firebase_options.dart';
-import 'package:citefest/pages/analytics_page.dart';
 import 'package:citefest/pages/create_mpin_page.dart';
 import 'package:citefest/pages/enter_mpin_page.dart';
 import 'package:citefest/pages/log_in_page.dart';
 import 'package:citefest/pages/page_handler.dart';
-import 'package:citefest/pages/profile_page.dart';
 import 'package:citefest/pages/receipt_page.dart';
 import 'package:citefest/pages/registration_page.dart';
 import 'package:citefest/pages/start_page.dart';
 import 'package:citefest/pages/testpage.dart';
-import 'package:citefest/pages/vouchers_page.dart';
+import 'package:citefest/utils/index_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 final GlobalKey<NavigatorState> globalNavigatorKey =
     GlobalKey<NavigatorState>();
@@ -27,8 +26,14 @@ void main() async {
 
   await Hive.initFlutter();
   await Hive.openBox("myRegistrationBox");
+  await Hive.openBox("sessions");
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => PageIndexProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

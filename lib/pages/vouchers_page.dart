@@ -1,4 +1,5 @@
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/utils/index_provider.dart';
 import 'package:citefest/widgets/universal/sub_section_info.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
 import 'package:citefest/widgets/vouchers/voucher_box.dart';
@@ -23,7 +24,7 @@ class _VoucherPageState extends State<VoucherPage> {
           HeaderBar(
             subText: "spend wise and use",
             headText: "Your Vouchers",
-            onPressProfile: () {},
+            onPressProfile: () => changePage(index: 3, context: context),
             onPressNotif: () {},
           ),
           const SizedBox(height: 20),

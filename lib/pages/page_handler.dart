@@ -3,9 +3,11 @@ import 'package:citefest/pages/analytics_page.dart';
 import 'package:citefest/pages/landing_page.dart';
 import 'package:citefest/pages/profile_page.dart';
 import 'package:citefest/pages/vouchers_page.dart';
+import 'package:citefest/utils/index_provider.dart';
 import 'package:citefest/widgets/bottomnav/route_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class PageHandler extends StatefulWidget {
   const PageHandler({super.key});
@@ -21,21 +23,29 @@ class _PageHandlerState extends State<PageHandler> {
     const VoucherPage(),
     const ProfilePage(),
   ];
-  int pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    int pageIndex = Provider.of<PageIndexProvider>(context).pageIndex;
+
     return WillPopScope(
       onWillPop: () async {
         if (pageIndex == 0) SystemNavigator.pop();
 
-        setState(() {
-          pageIndex = 0;
-        });
+        changePage(index: 0, context: context);
 
         return false;
       },
       child: Scaffold(
-        body: pages[pageIndex],
+        body: IndexedStack(
+          index: pageIndex,
+          children: const <Widget>[
+            LandingPage(),
+            AnalyticsPage(),
+            VoucherPage(),
+            ProfilePage(),
+          ],
+        ),
         backgroundColor: ColorPalette.bgColor,
         bottomNavigationBar: BottomAppBar(
           child: Container(
@@ -52,11 +62,8 @@ class _PageHandlerState extends State<PageHandler> {
                     RouteButton(
                       routeName: "Dashboard",
                       filePath: "assets/images/icons/home.png",
-                      routeCallback: () => {
-                        setState(() {
-                          pageIndex = 0;
-                        })
-                      },
+                      routeCallback: () =>
+                          changePage(index: 0, context: context),
                       currentIndex: pageIndex,
                       routeIndex: 0,
                     ),
@@ -65,11 +72,8 @@ class _PageHandlerState extends State<PageHandler> {
                       child: RouteButton(
                         routeName: "Analytics",
                         filePath: "assets/images/icons/align.png",
-                        routeCallback: () => {
-                          setState(() {
-                            pageIndex = 1;
-                          })
-                        },
+                        routeCallback: () =>
+                            changePage(index: 1, context: context),
                         currentIndex: pageIndex,
                         routeIndex: 1,
                       ),
@@ -83,11 +87,8 @@ class _PageHandlerState extends State<PageHandler> {
                       child: RouteButton(
                         routeName: "Vouchers",
                         filePath: "assets/images/icons/tag.png",
-                        routeCallback: () => {
-                          setState(() {
-                            pageIndex = 2;
-                          })
-                        },
+                        routeCallback: () =>
+                            changePage(index: 2, context: context),
                         currentIndex: pageIndex,
                         routeIndex: 2,
                       ),
@@ -95,11 +96,8 @@ class _PageHandlerState extends State<PageHandler> {
                     RouteButton(
                       routeName: "Profile",
                       filePath: "assets/images/icons/profile.png",
-                      routeCallback: () => {
-                        setState(() {
-                          pageIndex = 3;
-                        })
-                      },
+                      routeCallback: () =>
+                          changePage(index: 3, context: context),
                       currentIndex: pageIndex,
                       routeIndex: 3,
                     ),

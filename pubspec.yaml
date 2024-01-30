@@ -46,6 +46,9 @@ dependencies:
   indexed: ^0.0.8
   firebase_auth: ^4.16.0
   crypto: ^3.0.2
+  provider: ^6.1.1
+  intl: ^0.18.1
+  flutter_animate: ^4.4.1
 
 dev_dependencies:
   flutter_test:

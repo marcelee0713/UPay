@@ -26,7 +26,7 @@ class _HeaderBarState extends State<HeaderBar> {
       children: [
         Row(
           children: [
-            InkWell(
+            GestureDetector(
               onTap: widget.onPressProfile,
               child: Image.asset(
                 "assets/images/icons/user.png",
@@ -50,7 +50,10 @@ class _HeaderBarState extends State<HeaderBar> {
                 ),
                 const SizedBox(height: 2.5),
                 Text(
-                  widget.headText,
+                  widget.headText.length >= 15
+                      ? "${widget.headText.substring(0, 14)}..."
+                      : widget.headText,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: ColorPalette.accentBlack,
                     fontFamily: "Montserrat",
@@ -62,7 +65,7 @@ class _HeaderBarState extends State<HeaderBar> {
             )
           ],
         ),
-        InkWell(
+        GestureDetector(
           onTap: widget.onPressNotif,
           child: Image.asset(
             "assets/images/icons/bell.png",

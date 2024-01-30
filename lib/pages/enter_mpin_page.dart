@@ -7,6 +7,7 @@ import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:citefest/widgets/universal/dialog_loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:pinput/pinput.dart';
 
 class EnterMPINPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class EnterMPINPage extends StatefulWidget {
 
 class _EnterMPINPageState extends State<EnterMPINPage> {
   TextEditingController controller = TextEditingController(text: "");
+  final myRegBox = Hive.box("sessions");
+
   User? user = getUser();
 
   @override
@@ -99,17 +102,21 @@ class _EnterMPINPageState extends State<EnterMPINPage> {
               onCompleted: (value) async {
                 DialogLoading(subtext: "Verifying...").build(context);
 
-                bool res = await apiVerifyMPIN(mpinput: value, uid: user!.uid);
+                String? res =
+                    await apiVerifyMPIN(mpinput: value, uid: user!.uid);
 
                 if (!mounted) return;
 
                 Navigator.of(context, rootNavigator: true).pop();
 
-                if (res) {
+                if (res != null) {
+                  myRegBox.put("name", res);
                   Navigator.pushNamedAndRemoveUntil(
                       context, "/", (route) => false);
                   return;
                 }
+
+                myRegBox.put("name", null);
 
                 DialogInfo(
                   headerText: "Error",

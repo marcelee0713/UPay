@@ -1,10 +1,12 @@
 import 'package:citefest/constants/colors.dart';
-import 'package:citefest/widgets/landing/card.dart';
+import 'package:citefest/utils/index_provider.dart';
+import 'package:citefest/widgets/landing/cards/card.dart';
 import 'package:citefest/widgets/landing/landing_button.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_container.dart';
 import 'package:citefest/widgets/universal/sub_section_info.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  final myRegBox = Hive.box("sessions");
+  late String? name = myRegBox.get("name");
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +29,8 @@ class _LandingPageState extends State<LandingPage> {
           const SizedBox(height: 20),
           HeaderBar(
             subText: "welcome back",
-            headText: "Abdul Jabol",
-            onPressProfile: () {},
+            headText: name ?? "name",
+            onPressProfile: () => changePage(index: 3, context: context),
             onPressNotif: () {},
           ),
           const SizedBox(height: 20),

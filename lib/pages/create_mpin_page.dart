@@ -7,7 +7,6 @@ import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/auth/mpin_button.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:citefest/widgets/universal/dialog_loading.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pinput/pinput.dart';

@@ -117,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         },
                       ).build(context);
                     },
-                    iconSizeWidth: 32,
                     iconSizeHeight: 25,
+                    iconSizeWidth: 25,
                   )
                 ],
               )
