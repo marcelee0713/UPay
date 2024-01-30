@@ -2,6 +2,7 @@ import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/profile/account_acitivity_box.dart';
 import 'package:citefest/widgets/profile/profile_details_box.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
+import 'package:citefest/widgets/universal/dialog_loading.dart';
 import 'package:citefest/widgets/universal/sub_section_info_closable.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,30 +91,35 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 15),
                   ActivityBox(
-                      name: "Sign-Out",
-                      filePath: "assets/images/icons/exit.png",
-                      onTap: () async {
-                        DialogInfo(
-                            headerText: "Quit UPay?",
-                            subText: "Are you sure to leave the app?",
-                            confirmText: "Confirm",
-                            onCancel:(){
-                              Navigator.of(context,
-                                  rootNavigator: true)
-                                  .pop();
-                            },
-                            onConfirm: () async{
-                              await FirebaseAuth.instance.signOut();
-                              Navigator.of(context,
-                                  rootNavigator: true)
-                                  .pop();
-                              Navigator.pushNamedAndRemoveUntil(
-                                context, "/start", (route) => false);
-                            }
-                        ).build(context) ;
-                      },
-                      iconSizeWidth: 32,
-                      iconSizeHeight: 25,)
+                    name: "Sign-Out",
+                    filePath: "assets/images/icons/exit.png",
+                    onTap: () async {
+                      DialogInfo(
+                        headerText: "Quit UPay?",
+                        subText: "Are you sure you want to quit?",
+                        confirmText: "Confirm",
+                        onCancel: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        onConfirm: () async {
+                          Navigator.of(context, rootNavigator: true).pop();
+
+                          DialogLoading(subtext: "Logging out...")
+                              .build(context);
+
+                          await FirebaseAuth.instance.signOut();
+
+                          if (!mounted) return;
+
+                          Navigator.of(context, rootNavigator: true).pop();
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, "/start", (route) => false);
+                        },
+                      ).build(context);
+                    },
+                    iconSizeWidth: 32,
+                    iconSizeHeight: 25,
+                  )
                 ],
               )
             ],

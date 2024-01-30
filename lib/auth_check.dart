@@ -1,4 +1,4 @@
-import 'package:citefest/pages/page_handler.dart';
+import 'package:citefest/pages/enter_mpin_page.dart';
 import 'package:citefest/pages/start_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _AuthCheckState extends State<AuthCheck> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasData && snapshot.data != null) {
-          return const PageHandler();
+          return const EnterMPINPage();
         } else {
           return const StartPage();
         }

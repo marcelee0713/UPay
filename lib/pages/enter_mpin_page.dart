@@ -1,7 +1,11 @@
+import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/auth/mpin_button.dart';
+import 'package:citefest/widgets/universal/dialog_info.dart';
+import 'package:citefest/widgets/universal/dialog_loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
@@ -14,6 +18,8 @@ class EnterMPINPage extends StatefulWidget {
 
 class _EnterMPINPageState extends State<EnterMPINPage> {
   TextEditingController controller = TextEditingController(text: "");
+  User? user = getUser();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +31,31 @@ class _EnterMPINPageState extends State<EnterMPINPage> {
           shrinkWrap: true,
           children: [
             const SizedBox(height: 20),
-            ArrowBack(onTap: () {}),
+            ArrowBack(
+              onTap: () async {
+                DialogInfo(
+                  headerText: "Confirmation",
+                  subText: "This will log you out, are you sure?",
+                  confirmText: "Yes",
+                  onCancel: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  onConfirm: () async {
+                    Navigator.of(context, rootNavigator: true).pop();
+
+                    DialogLoading(subtext: "Logging out...").build(context);
+
+                    await FirebaseAuth.instance.signOut();
+
+                    if (!mounted) return;
+
+                    Navigator.of(context, rootNavigator: true).pop();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/start", (route) => false);
+                  },
+                ).build(context);
+              },
+            ),
             const SizedBox(height: 20),
             const AuthInfo(
                 headText: "Enter your MPIN",
@@ -66,8 +96,32 @@ class _EnterMPINPageState extends State<EnterMPINPage> {
                   color: ColorPalette.accentBlack,
                 ),
               ),
-              onCompleted: (value) {
-                debugPrint(value);
+              onCompleted: (value) async {
+                DialogLoading(subtext: "Verifying...").build(context);
+
+                bool res = await apiVerifyMPIN(mpinput: value, uid: user!.uid);
+
+                if (!mounted) return;
+
+                Navigator.of(context, rootNavigator: true).pop();
+
+                if (res) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/", (route) => false);
+                  return;
+                }
+
+                DialogInfo(
+                  headerText: "Error",
+                  subText: "Entered MPIN is invalid, please try again",
+                  confirmText: "Try again",
+                  onCancel: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  onConfirm: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                ).build(context);
               },
             ),
             const SizedBox(height: 20),

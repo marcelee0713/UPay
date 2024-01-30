@@ -45,6 +45,7 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   indexed: ^0.0.8
   firebase_auth: ^4.16.0
+  crypto: ^3.0.2
 
 dev_dependencies:
   flutter_test:

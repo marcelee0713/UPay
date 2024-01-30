@@ -96,7 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               const SizedBox(height: 20),
               buildSignUpButton(),
               const SizedBox(height: 10),
-              buildAlreadyHaveAccount(),
+              buildAlreadyHaveAccount(context),
               const SizedBox(height: 30),
             ],
           ),
@@ -288,12 +288,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
           return;
         }
 
-        String fullName = fullNameController.text;
-        String birthday = birthdayController.text;
-        String userId = studentIdController.text;
-        String phoneNumber = phoneNumberController.text;
-        String email = emailAddressController.text;
-        String password = confirmPasswordController.text;
+        String fullName = fullNameController.text.trim();
+        String birthday = birthdayController.text.trim();
+        String userId = studentIdController.text.trim();
+        String phoneNumber = phoneNumberController.text.trim();
+        String email = emailAddressController.text.trim();
+        String password = confirmPasswordController.text.trim();
 
         _myRegBox.put("fullName", fullName);
         _myRegBox.put("birthday", birthday);
@@ -323,7 +323,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Widget buildAlreadyHaveAccount() {
+  Widget buildAlreadyHaveAccount(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -339,8 +339,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         GestureDetector(
           onTap: () {
             debugPrint("Log In Tapped");
-            // Navigate to the login page
-            // Add the necessary navigation code here
+            Navigator.pop(context);
           },
           child: const Text(
             "Log In",

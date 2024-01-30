@@ -52,8 +52,11 @@ class DialogInfo {
                     Text(
                       subText,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: ColorPalette.accentBlack,
+                        overflow: subText.length >= 55
+                            ? TextOverflow.ellipsis
+                            : TextOverflow.visible,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         fontSize: 11,

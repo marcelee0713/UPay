@@ -1,9 +1,12 @@
+import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/models/user.dart';
+import 'package:citefest/utils/mpin_hash.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/auth/mpin_button.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
+import 'package:citefest/widgets/universal/dialog_loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -83,70 +86,94 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
                   headerText: "Confirm MPIN",
                   subText: "Are you sure you want to use this as your MPIN?",
                   confirmText: "Confirm",
-                  onCancel: () =>
-                      Navigator.of(context, rootNavigator: true).pop(),
+                  onCancel: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
                   onConfirm: () async {
-                    // TODO: Arrange the Future/Organized Functions
-                    // TODO: Put loading screens here.
+                    Navigator.of(context, rootNavigator: true).pop();
+
+                    DialogLoading(subtext: "Creating...").build(context);
+
+                    String salt = generateSalt();
+
+                    String hashedMPIN = hashMPIN(value, salt);
 
                     UserModel user = UserModel(
-                        name: name,
-                        studentNumber: studentNumber,
-                        email: email,
-                        mpin: value,
-                        birthday: birthday,
-                        phoneNumber: phoneNumber,
-                        balance: "0");
+                      name: name,
+                      studentNumber: studentNumber,
+                      email: email,
+                      mpin: hashedMPIN,
+                      birthday: birthday,
+                      phoneNumber: phoneNumber,
+                      balance: "0",
+                      salt: salt,
+                    );
 
-                    await createAccount(user, password).then(
-                      (value) {
+                    AuthResult res =
+                        await createAccAPI(user: user, password: password);
+
+                    if (!mounted) return;
+
+                    Navigator.of(context, rootNavigator: true).pop();
+
+                    if (res.userCredential == null) {
+                      DialogInfo(
+                        headerText: "Error",
+                        subText: res.errorMessage!,
+                        confirmText: "Try again",
+                        onCancel: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        onConfirm: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                      ).build(context);
+                      return;
+                    }
+
+                    String tempEmail = email;
+                    String tempPass = password;
+
+                    myRegBox.put("fullName", "");
+                    myRegBox.put("birthday", "");
+                    myRegBox.put("userId", "");
+                    myRegBox.put("phoneNumber", "");
+                    myRegBox.put("email", "");
+                    myRegBox.put("password", "");
+
+                    DialogInfo(
+                      headerText: "Success!",
+                      subText: "You have created an account! Log in now!",
+                      confirmText: "Log in",
+                      cancelText: "Go back",
+                      onCancel: () {
                         Navigator.of(context, rootNavigator: true).pop();
 
-                        myRegBox.put("fullName", "");
-                        myRegBox.put("birthday", "");
-                        myRegBox.put("userId", "");
-                        myRegBox.put("phoneNumber", "");
-                        myRegBox.put("email", "");
-                        myRegBox.put("password", "");
-
-                        // TODO: Populate the database in the Firestore
-
-                        DialogInfo(
-                          headerText: "Success!",
-                          subText: "You have created an account! Log in now!",
-                          confirmText: "Log in",
-                          cancelText: "Go back",
-                          onCancel: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, "/login", (route) => false);
-                          },
-                          onConfirm: () async {
-                            Navigator.of(context, rootNavigator: true).pop();
-
-                            // TODO: Put loading screens here.
-
-                            await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                              email: user.email,
-                              password: password,
-                            );
-
-                            // ignore: use_build_context_synchronously
-                            Navigator.of(context, rootNavigator: true).pop();
-                            // ignore: use_build_context_synchronously
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, "/", (route) => false);
-                          },
-                        ).build(context);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/login", (route) => false);
                       },
-                    ).catchError(
-                      (err) {
+                      onConfirm: () async {
                         Navigator.of(context, rootNavigator: true).pop();
 
+                        DialogLoading(subtext: "Redirecting...").build(context);
+
+                        AuthResult res =
+                            await signIn(email: tempEmail, password: tempPass);
+
+                        if (!mounted) return;
+
+                        if (res.userCredential != null) {
+                          Navigator.of(context, rootNavigator: true).pop();
+
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, "/enter-mpin", (route) => false);
+
+                          return;
+                        }
+
                         DialogInfo(
-                          headerText: "Failed!",
-                          subText: "Error $err",
+                          headerText: "Error",
+                          subText: "Can not log in, please restart the app!",
                           confirmText: "Try again",
                           onCancel: () {
                             Navigator.of(context, rootNavigator: true).pop();
@@ -155,8 +182,10 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
                             Navigator.of(context, rootNavigator: true).pop();
                           },
                         ).build(context);
+
+                        return;
                       },
-                    );
+                    ).build(context);
                   },
                 ).build(context);
               },
@@ -179,20 +208,6 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
         ),
       ),
     );
-  }
-
-  Future<UserCredential> createAccount(UserModel user, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: user.email, password: password);
-
-      return userCredential;
-    } on FirebaseAuthException catch (err) {
-      throw err.message.toString();
-    } catch (err) {
-      throw err.toString();
-    }
   }
 
   void enterMPIN(String pin) {

@@ -1,11 +1,10 @@
+import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/universal/dialog_loading.dart';
-import 'landing_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -209,60 +208,36 @@ class _SignInPageState extends State<SignInPage> {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
-                  DialogLoading(subtext: "Logging in.")
-                      .buildLoadingScreen(context);
-                  logIn(
-                    email: _inputControllerEmail.text.trim(),
-                    password: _inputControllerPassword.text.trim(),
-                    context: context,
-                  ).catchError(
-                        (err) {
-                      if (err == 'user-not-found') {
+
+                  DialogLoading(subtext: "Logging in...").build(context);
+
+                  String email = _inputControllerEmail.text.trim();
+                  String password = _inputControllerPassword.text.trim();
+
+                  AuthResult res =
+                      await signIn(email: email, password: password);
+
+                  if (!mounted) return;
+
+                  Navigator.of(context, rootNavigator: true).pop();
+
+                  if (res.userCredential == null) {
+                    DialogInfo(
+                      headerText: "Error",
+                      subText: res.errorMessage!,
+                      confirmText: "Try again",
+                      onCancel: () {
                         Navigator.of(context, rootNavigator: true).pop();
-                       DialogInfo(
-                           headerText: "Account not found",
-                           subText: "the account name does not exist.",
-                           confirmText: "Try Again",
-                           onCancel:(){},
-                           onConfirm: (){});
-                       build(context);
-                      } else if (err == 'wrong-password') {
+                      },
+                      onConfirm: () {
                         Navigator.of(context, rootNavigator: true).pop();
-                        DialogInfo(
-                            headerText: "Invalid email or password",
-                            subText: "please check your credentials.",
-                            confirmText: "Try Again",
-                            onCancel:(){},
-                            onConfirm: (){});
-                        build(context);
-                      } else {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        DialogInfo(
-                            headerText: "Error!",
-                            subText: "something went wrong.",
-                            confirmText: "Try Again",
-                            onCancel:(){},
-                            onConfirm: (){});
-                        build(context);
-                      }
-                    },
-                  ).then((value) {
-                    if (value == null) {
-                      Navigator.of(context, rootNavigator: true).pop();
-                      DialogInfo(
-                          headerText: "Error!",
-                          subText: "something went wrong.",
-                          confirmText: "Try Again",
-                          onCancel:(){},
-                          onConfirm: (){});
-                      build(context);
-                    } else {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const LandingPage()),
-                              (Route<dynamic> route) => false);
-                    }
-                  });
+                      },
+                    ).build(context);
+                    return;
+                  }
+
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/enter-mpin", (route) => false);
                 },
                 style: ElevatedButton.styleFrom(
                   shadowColor: Colors.transparent,
@@ -315,23 +290,5 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
-
-  }
-  Future logIn(
-      {required String email, password, required BuildContext context}) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return "Successfully login";
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw e.code;
-      } else if (e.code == 'wrong-password') {
-        throw e.code;
-      }
-      throw e.code;
-    }
   }
 }
