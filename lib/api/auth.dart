@@ -51,7 +51,7 @@ Future<AuthResult> signIn(
 
     return AuthResult(userCredential: userCredential);
   } on FirebaseAuthException catch (err) {
-    return AuthResult(errorMessage: "Auth Error: ${err.message}");
+    return AuthResult(errorMessage: firebaseAuthString(err.code));
   } catch (err) {
     return AuthResult(errorMessage: "Error: ${err.toString()}");
   }
@@ -79,5 +79,23 @@ Future<String?> apiVerifyMPIN(
     return null;
   } catch (err) {
     return null;
+  }
+}
+
+String firebaseAuthString(String code) {
+  switch (code) {
+    case "user-disabled":
+      return "You are currently disabled!";
+    case "user-not-found":
+      return "User not found!";
+    case "invalid-email":
+    case "invalid-credential":
+    case "ERROR_WRONG_PASSWORD":
+    case "wrong-password":
+      return "Wrong credentials!";
+    case "too-many-requests":
+      return "Too many request already! Comeback later.";
+    default:
+      return "Something went wrong! $code";
   }
 }
