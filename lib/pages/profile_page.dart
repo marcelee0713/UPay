@@ -1,4 +1,5 @@
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/utils/index_provider.dart';
 import 'package:citefest/widgets/profile/account_acitivity_box.dart';
 import 'package:citefest/widgets/profile/profile_details_box.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
@@ -40,8 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
             onClose: () {},
           ),
           const SizedBox(height: 20),
-          const ProfileDetailsBox(
-              name: "Grace Magicarp", balance: "P 699,350.00"),
+          const ProfileDetailsBox(),
           const SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ActivityBox(
                     name: "Transactions",
                     filePath: "assets/images/icons/arrows.png",
-                    onTap: () {},
+                    onTap: () => changePage(context: context, index: 0),
                     iconSizeHeight: 29,
                     iconSizeWidth: 25,
                   ),
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ActivityBox(
                     name: "Analytics and Insights",
                     filePath: "assets/images/icons/pie-chart.png",
-                    onTap: () {},
+                    onTap: () => changePage(context: context, index: 1),
                     iconSizeHeight: 25,
                     iconSizeWidth: 25,
                   ),

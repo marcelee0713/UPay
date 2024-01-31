@@ -26,8 +26,31 @@ class TransactionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: onTap,
+    return Tooltip(
+        message: note != null ? "Note: $note" : "",
+        preferBelow: false,
+        textStyle: const TextStyle(
+          color: ColorPalette.accentWhite,
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w400,
+          fontSize: 10,
+        ),
+        triggerMode: TooltipTriggerMode.tap,
+        decoration: BoxDecoration(
+          color: ColorPalette.skyBlue,
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 2,
+              offset: const Offset(
+                0,
+                2,
+              ),
+            ),
+          ],
+        ),
         child: Container(
           height: 65,
           padding: const EdgeInsets.only(right: 20),
