@@ -21,7 +21,8 @@ class StudentCard extends StatefulWidget {
 
 class _StudentCardState extends State<StudentCard> {
   User? user = getUser();
-  bool isVisible = false;
+  bool isFlipped = false;
+  bool isTapped = false;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<StudentCardRes>(
@@ -46,9 +47,14 @@ class _StudentCardState extends State<StudentCard> {
               "** **** ${data.studentNumber.split("-")[2]}";
 
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               setState(() {
-                isVisible = !isVisible;
+                isTapped = !isTapped;
+              });
+
+              await Future.delayed(const Duration(milliseconds: 250));
+              setState(() {
+                isFlipped = !isFlipped;
               });
             },
             child: Container(
@@ -56,6 +62,7 @@ class _StudentCardState extends State<StudentCard> {
               padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
+                color: ColorPalette.skyBlue,
                 image: const DecorationImage(
                   image: AssetImage(
                     "assets/images/icons/card1.png",
@@ -74,41 +81,13 @@ class _StudentCardState extends State<StudentCard> {
                   )
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "STUDENT CARD",
-                    style: TextStyle(
-                      color: ColorPalette.accentWhite,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    isVisible ? data.studentNumber : hiddenStudentNumber,
-                    style: const TextStyle(
-                      color: ColorPalette.accentWhite,
-                      fontFamily: "Nova Mono",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 24,
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Image.asset("assets/images/icons/upayoncard.png"),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: !isFlipped
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Current Balance",
+                          "STUDENT CARD",
                           style: TextStyle(
                             color: ColorPalette.accentWhite,
                             fontFamily: "Montserrat",
@@ -116,22 +95,106 @@ class _StudentCardState extends State<StudentCard> {
                             fontSize: 12,
                           ),
                         ),
+                        const SizedBox(height: 14),
                         Text(
-                          formattedMoney,
+                          hiddenStudentNumber,
                           style: const TextStyle(
                             color: ColorPalette.accentWhite,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontFamily: "Nova Mono",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 24,
                           ),
                         ),
+                        const SizedBox(height: 25),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child:
+                              Image.asset("assets/images/icons/upayoncard.png"),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Current Balance",
+                                style: TextStyle(
+                                  color: ColorPalette.accentWhite,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                formattedMoney,
+                                style: const TextStyle(
+                                  color: ColorPalette.accentWhite,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Transform(
+                          transform: Matrix4.rotationY(3.141),
+                          alignment: Alignment.bottomCenter,
+                          child: const Text(
+                            "You should be wise on spending your money.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorPalette.accentWhite,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        Transform(
+                          transform: Matrix4.rotationY(3.141),
+                          alignment: Alignment.bottomCenter,
+                          child: const Text.rich(
+                            TextSpan(
+                              text: "Buy what you ",
+                              children: [
+                                TextSpan(
+                                  text: "need",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ", then buy what you",
+                                ),
+                                TextSpan(
+                                  text: " want",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            style: TextStyle(
+                              color: ColorPalette.accentWhite,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ).animate().fadeIn(duration: 900.milliseconds);
+            )
+                .animate(target: isTapped ? 0 : 1)
+                .flipH(begin: 1, duration: 500.ms),
+          );
         });
   }
 }

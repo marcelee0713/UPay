@@ -1,4 +1,10 @@
+import 'package:citefest/api/auth.dart';
+import 'package:citefest/api/transactions.dart';
+import 'package:citefest/models/transactions.dart';
 import 'package:citefest/widgets/landing/transactions/transaction.box.dart';
+import 'package:citefest/widgets/landing/transactions/transaction_box_loading.dart';
+import 'package:citefest/widgets/landing/transactions/transaction_error.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TransactionContainer extends StatelessWidget {
@@ -6,45 +12,49 @@ class TransactionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = getUser();
+
     return SizedBox(
       height: 175,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: getList().length,
-        itemBuilder: (context, index) {
-          return TransactionBox(
-            companyName: getList()[index].companyName,
-            type: getList()[index].type,
-            amountType: getList()[index].amountType,
-            amount: getList()[index].amount,
-            index: index,
-            onTap: () {},
-          );
-        },
-      ),
+      child: FutureBuilder<TransactionsRes?>(
+          future: apiGetTransactions(uid: user!.uid),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return const TransactioBoxLoading();
+                },
+              );
+            }
+
+            if (snapshot.hasError) {
+              return TransactionError(error: snapshot.data!.errorMessage);
+            }
+
+            List<TransactionModel> list = snapshot.data!.list;
+            int incrDelay = 700;
+
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                incrDelay += 100;
+                return TransactionBox(
+                  type: list[index].type,
+                  amountType: list[index].amountType,
+                  amount: list[index].amount,
+                  index: index,
+                  onTap: () {},
+                  date: list[index].createdAt,
+                  recipient: list[index].recipient,
+                  note: list[index].note ?? "",
+                  animationDelay: Duration(milliseconds: incrDelay),
+                );
+              },
+            );
+          }),
     );
   }
-
-  List<Transactions> getList() {
-    List<Transactions> list = [
-      Transactions("Gcash Inc.", "Top up", "P 10,000.00", "increased"),
-      Transactions("PHINMA-Upang", "P1 payment", "P 4,245.00", "decreased"),
-      Transactions("Kusina ni Karding", "Hotdog", "P 45.00", "decreased"),
-      Transactions("Gcash Inc.", "Top up", "P 1,000.00", "increased"),
-      Transactions("BJ Muoko", "Buko Juice", "P 30.00", "decreased"),
-      Transactions(
-          "PHINMA-Upang", "Fun Run Ticket 2023-2024", "P 500.00", "decreased")
-    ];
-
-    return list;
-  }
-}
-
-class Transactions {
-  final String companyName;
-  final String type;
-  final String amount;
-  final String amountType;
-
-  Transactions(this.companyName, this.type, this.amount, this.amountType);
 }
