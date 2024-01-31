@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,43 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAtWG1L07rOjmB6VqyIDCy1VQhglqAPoJg',
+    appId: '1:546368602278:web:f13a6f0ce2bf659d577467',
+    messagingSenderId: '546368602278',
+    projectId: 'upay-259b7',
+    authDomain: 'upay-259b7.firebaseapp.com',
+    databaseURL: 'https://upay-259b7-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'upay-259b7.appspot.com',
+    measurementId: 'G-4E4CP3M1KQ',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDGQnI9frEsL2lz2k7GFSYrvw9vySAJL5c',
     appId: '1:546368602278:android:a8feff8c3ce98193577467',
     messagingSenderId: '546368602278',
     projectId: 'upay-259b7',
+    databaseURL: 'https://upay-259b7-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'upay-259b7.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBpZ1GlWVlblk9gvwnjrTf23DL-8lpBB9A',
+    appId: '1:546368602278:ios:16537bf867f6b3cd577467',
+    messagingSenderId: '546368602278',
+    projectId: 'upay-259b7',
+    databaseURL: 'https://upay-259b7-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'upay-259b7.appspot.com',
+    iosBundleId: 'com.example.citefest',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBpZ1GlWVlblk9gvwnjrTf23DL-8lpBB9A',
+    appId: '1:546368602278:ios:16537bf867f6b3cd577467',
+    messagingSenderId: '546368602278',
+    projectId: 'upay-259b7',
+    databaseURL: 'https://upay-259b7-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'upay-259b7.appspot.com',
+    iosBundleId: 'com.example.citefest',
   );
 }

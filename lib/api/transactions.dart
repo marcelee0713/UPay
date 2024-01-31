@@ -13,7 +13,7 @@ Future<TransactionsRes?> apiGetTransactions({required String uid}) async {
 
       TransactionModel obj = TransactionModel.fromJson(data);
 
-      list.add(obj);
+      if (obj.uid == uid) list.add(obj);
     }
 
     return TransactionsRes(list: list);

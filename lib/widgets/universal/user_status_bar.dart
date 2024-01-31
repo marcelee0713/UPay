@@ -1,4 +1,7 @@
+import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/widgets/notifications/notificaton_modal.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HeaderBar extends StatefulWidget {
@@ -18,6 +21,7 @@ class HeaderBar extends StatefulWidget {
 }
 
 class _HeaderBarState extends State<HeaderBar> {
+  User? user = getUser();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -66,7 +70,7 @@ class _HeaderBarState extends State<HeaderBar> {
           ],
         ),
         GestureDetector(
-          onTap: widget.onPressNotif,
+          onTap: () => NotifModal(uid: user!.uid).build(context),
           child: Image.asset(
             "assets/images/icons/bell.png",
             height: 30,

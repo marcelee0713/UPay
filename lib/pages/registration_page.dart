@@ -1,3 +1,4 @@
+import 'package:citefest/utils/input_validators.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
 import 'package:citefest/constants/colors.dart';
@@ -39,7 +40,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController fullNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   TextEditingController studentIdController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -70,8 +72,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   headText: "Create an account",
                   subText: "hurry and get new user deals"),
               const SizedBox(height: 60),
-              buildTextField("Full Name", fullNameController,
-                  (p0) => fullNameValidator(fullNameController.text)),
+              buildTextField("First Name", firstNameController,
+                  (p0) => firstNameValidator(firstNameController.text)),
+              buildTextField("Last Name", lastNameController,
+                  (p0) => lastNameValidator(lastNameController.text)),
               buildTextField("Birthday (MM/DD/YY)", birthdayController,
                   (p0) => validateDateFormat(birthdayController.text)),
               buildTextField("Student ID", studentIdController,
@@ -90,7 +94,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   "Confirm Password",
                   confirmPasswordController,
                   confirmPassVisible,
-                  (p0) => cfrmPassValidator(confirmPasswordController.text)),
+                  (p0) => cfrmPassValidator(confirmPasswordController.text,
+                      passwordController, confirmPasswordController)),
               const SizedBox(height: 5),
               buildTermsAndConditions(),
               const SizedBox(height: 20),
@@ -288,14 +293,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
           return;
         }
 
-        String fullName = fullNameController.text.trim();
+        String name =
+            "${firstNameController.text.trim()} ${lastNameController.text.trim()}";
         String birthday = birthdayController.text.trim();
         String userId = studentIdController.text.trim();
         String phoneNumber = phoneNumberController.text.trim();
         String email = emailAddressController.text.trim();
         String password = confirmPasswordController.text.trim();
 
-        _myRegBox.put("fullName", fullName);
+        _myRegBox.put("fullName", name);
         _myRegBox.put("birthday", birthday);
         _myRegBox.put("userId", userId);
         _myRegBox.put("phoneNumber", phoneNumber);
@@ -355,86 +361,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  String? fullNameValidator(String? value) {
-    if (value!.isNotEmpty) return null;
-
-    return "Enter your full name.";
-  }
-
-  String? validateDateFormat(String? date) {
-    RegExp datePattern = RegExp(r'^\d{2}/\d{2}/\d{2}$');
-
-    if (!datePattern.hasMatch(date!)) {
-      return 'Invalid date format. Use MM/DD/YY';
-    }
-
-    return null;
-  }
-
-  String? studentNumberValidator(String? value) {
-    final bool studentIdValid = RegExp(r"^[0-9-]+$").hasMatch(value!);
-    if (studentIdValid && value.length >= 10) {
-      return null;
-    } else if (value.length <= 9 && value.isNotEmpty) {
-      return "Input is too short.";
-    } else if (value.isEmpty) {
-      return "Enter Input.";
-    } else {
-      return "Enter valid school ID.";
-    }
-  }
-
-  String? phoneNumberValidator(String? value) {
-    final bool phoneValid = RegExp(r"^(09|\+639)\d{9}$").hasMatch(value!);
-    if (phoneValid) {
-      return null;
-    } else if (value.length <= 11 && !phoneValid) {
-      return "Please use +63 phone number format";
-    } else if (value.length <= 10 && value.isNotEmpty) {
-      return "Input is too short.";
-    } else {
-      return "Enter an input.";
-    }
-  }
-
-  String? phinmaedEmailValidator(String? value) {
-    const String expectedDomain = '@phinmaed.com';
-
-    if (value!.isEmpty) return "Enter your email.";
-
-    if (value.endsWith('@$expectedDomain')) {
-      return 'Invalid email domain. Use @$expectedDomain';
-    }
-
-    return null;
-  }
-
-  String? passwordValidator(String? value) {
-    final bool passwordValid = RegExp(
-            r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.+=_]).{8,}$")
-        .hasMatch(value!);
-    if (passwordValid) {
-      return null;
-    }
-
-    return "Password must be at least 8 characters, at least one uppercase, number, and special characters.";
-  }
-
-  String? cfrmPassValidator(String? value) {
-    final bool cfrmPasswordValid =
-        passwordController.text == confirmPasswordController.text;
-    if (cfrmPasswordValid) {
-      return null;
-    } else if (value!.isEmpty) {
-      return 'Enter input.';
-    } else {
-      return "Password not match";
-    }
-  }
-
   @override
   void dispose() {
-    fullNameController.dispose();
+    firstNameController.dispose();
     birthdayController.dispose();
     studentIdController.dispose();
     phoneNumberController.dispose();

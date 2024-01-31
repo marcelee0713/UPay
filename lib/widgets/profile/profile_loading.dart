@@ -49,6 +49,5 @@ class ProfileLoading extends StatelessWidget {
       ],
       onPlay: (controller) => controller.repeat(),
     );
-    ;
   }
 }

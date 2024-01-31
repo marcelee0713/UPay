@@ -3,7 +3,9 @@ import 'package:citefest/api/transactions.dart';
 import 'package:citefest/models/transactions.dart';
 import 'package:citefest/widgets/landing/transactions/transaction.box.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_box_loading.dart';
+import 'package:citefest/widgets/landing/transactions/transaction_empty.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_error.dart';
+import 'package:citefest/widgets/notifications/notification_empty.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +37,10 @@ class TransactionContainer extends StatelessWidget {
 
             List<TransactionModel> list = snapshot.data!.list;
             int incrDelay = 700;
+
+            if (list.isEmpty) {
+              return const TransactionEmpty();
+            }
 
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
