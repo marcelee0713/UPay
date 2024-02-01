@@ -12,33 +12,26 @@ String? lastNameValidator(String? value) {
   return "Enter your last name.";
 }
 
-String? studentNumberValidator(String? value) {
-  if (value == null || value.isEmpty) return "Enter your student number";
-  String cleanedInput = value.replaceAll(RegExp(r'\D'), '');
-
-  // Check if the cleaned input has the correct length
-  if (cleanedInput.length != 12) {
-    return "Please follow the format XX-XXXX-XXXXXX.";
-  }
-  // Extract segments
-  String segment1 = cleanedInput.substring(0, 2);
-  String segment2 = cleanedInput.substring(2, 6);
-  String segment3 = cleanedInput.substring(6);
-
-  // Check if each segment has the correct length
-  if (segment1.length != 2 || segment2.length != 4 || segment3.length != 6) {
-    return "Please follow the format XX-XXXX-XXXXXX";
-  }
+String? studentNumber1Validator(String? value) {
+  if (value == null || value.isEmpty) return "Required.";
+  if (value.length < 2) return "Too short.";
+  if (value.length > 2) return "Too long.";
 
   return null;
 }
 
-String? validateDateFormat(String? date) {
-  RegExp datePattern = RegExp(r'^\d{2}/\d{2}/\d{2}$');
+String? studentNumber2Validator(String? value) {
+  if (value == null || value.isEmpty) return "Required.";
+  if (value.length < 4) return "Too short.";
+  if (value.length > 4) return "Too long.";
 
-  if (!datePattern.hasMatch(date!)) {
-    return 'Invalid date format. Use MM/DD/YY';
-  }
+  return null;
+}
+
+String? studentNumber3Validator(String? value) {
+  if (value == null || value.isEmpty) return "Required.";
+  if (value.length < 4) return "Too short.";
+  if (value.length > 6) return "Too long.";
 
   return null;
 }

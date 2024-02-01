@@ -18,8 +18,6 @@ Future<List<NotificationModel>> apiGetNotifications(
       FirebaseDatabase.instance.ref().child("notifications/$uid");
   try {
     List<NotificationModel> list = [];
-    Completer<StreamController<List<NotificationModel>>> completer =
-        Completer();
 
     db.onValue.listen((event) {
       if (event.snapshot.value != null) {

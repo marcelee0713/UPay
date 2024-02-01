@@ -1,4 +1,8 @@
 import 'package:citefest/utils/input_validators.dart';
+import 'package:citefest/widgets/registration/birth_of_date.dart';
+import 'package:citefest/widgets/registration/password_field.dart';
+import 'package:citefest/widgets/registration/student_id.dart';
+import 'package:citefest/widgets/registration/text_field.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
 import 'package:citefest/constants/colors.dart';
@@ -43,7 +47,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
-  TextEditingController studentIdController = TextEditingController();
+  TextEditingController studentIdController1 = TextEditingController();
+  TextEditingController studentIdController2 = TextEditingController();
+  TextEditingController studentIdController3 = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -52,6 +58,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool createPasswordVisible = false;
   bool confirmPassVisible = false;
   bool? isChecked = false;
+
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -69,33 +77,57 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ArrowBack(onTap: () => Navigator.pop(context)),
               const SizedBox(height: 20),
               const AuthInfo(
-                  headText: "Create an account",
-                  subText: "hurry and get new user deals"),
+                headText: "Create an account",
+                subText: "hurry and get new user deals",
+              ),
               const SizedBox(height: 60),
-              buildTextField("First Name", firstNameController,
-                  (p0) => firstNameValidator(firstNameController.text)),
-              buildTextField("Last Name", lastNameController,
-                  (p0) => lastNameValidator(lastNameController.text)),
-              buildTextField("Birthday (MM/DD/YY)", birthdayController,
-                  (p0) => validateDateFormat(birthdayController.text)),
-              buildTextField("Student ID", studentIdController,
-                  (p0) => studentNumberValidator(studentIdController.text)),
-              buildTextField("Phone Number", phoneNumberController,
-                  (p0) => phoneNumberValidator(phoneNumberController.text)),
-              buildTextField("Email Address", emailAddressController,
-                  (p0) => phinmaedEmailValidator(emailAddressController.text)),
-              buildPasswordField(
-                  "Create Password",
-                  passwordController,
-                  createPasswordVisible,
-                  (p0) => passwordValidator(passwordController.text)),
+              BasicTextField(
+                labelText: "First Name",
+                controller: firstNameController,
+                validator: (p0) => firstNameValidator(firstNameController.text),
+              ),
+              BasicTextField(
+                labelText: "Last Name",
+                controller: lastNameController,
+                validator: (p0) => lastNameValidator(lastNameController.text),
+              ),
+              BirthOfDateField(
+                labelText: "Birth of Date",
+                controller: birthdayController,
+              ),
+              StudentNumberField(
+                labelText: "Student Number",
+                controller1: studentIdController1,
+                controller2: studentIdController2,
+                controller3: studentIdController3,
+              ),
+              BasicTextField(
+                labelText: "Phone Number",
+                controller: phoneNumberController,
+                validator: (p0) =>
+                    phoneNumberValidator(phoneNumberController.text),
+              ),
+              BasicTextField(
+                labelText: "Email Address",
+                controller: emailAddressController,
+                validator: (p0) =>
+                    phinmaedEmailValidator(emailAddressController.text),
+              ),
+              PasswordField(
+                controller: passwordController,
+                labelText: "Create Password",
+                validator: (p0) => passwordValidator(passwordController.text),
+              ),
               const SizedBox(height: 20),
-              buildPasswordField(
-                  "Confirm Password",
+              PasswordField(
+                controller: confirmPasswordController,
+                labelText: "Confirm Password",
+                validator: (p0) => cfrmPassValidator(
+                  confirmPasswordController.text,
+                  passwordController,
                   confirmPasswordController,
-                  confirmPassVisible,
-                  (p0) => cfrmPassValidator(confirmPasswordController.text,
-                      passwordController, confirmPasswordController)),
+                ),
+              ),
               const SizedBox(height: 5),
               buildTermsAndConditions(),
               const SizedBox(height: 20),
@@ -107,121 +139,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildTextField(String labelText, TextEditingController controller,
-      Function(String) validator) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          labelText,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            fontFamily: "Montserrat",
-            color: ColorPalette.accentBlack,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          cursorColor: ColorPalette.accentBlack,
-          validator: (value) {
-            return validator(controller.text);
-          },
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 18.5),
-            enabledBorder: enabledBorder,
-            focusedBorder: focusedBorder,
-            errorBorder: errorBorder,
-            focusedErrorBorder: errorBorder,
-            border: const OutlineInputBorder(),
-            filled: true,
-            fillColor: const Color(0xffe8e8e8),
-            errorStyle: const TextStyle(
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.normal,
-              color: ColorPalette.errorColor,
-              fontSize: 12,
-            ),
-          ),
-          style: const TextStyle(
-            color: ColorPalette.accentBlack,
-            fontFamily: 'Montserrat',
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-
-  Widget buildPasswordField(String labelText, TextEditingController controller,
-      bool passwordVisible, Function(String) validator) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          labelText,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            fontFamily: "Montserrat",
-            color: ColorPalette.accentBlack,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          validator: (value) {
-            return validator(controller.text);
-          },
-          obscureText: !passwordVisible,
-          cursorColor: ColorPalette.accentBlack,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 15, vertical: 18.5),
-            enabledBorder: enabledBorder,
-            focusedBorder: focusedBorder,
-            errorBorder: errorBorder,
-            focusedErrorBorder: errorBorder,
-            border: const OutlineInputBorder(),
-            filled: true,
-            fillColor: const Color(0xffe8e8e8),
-            errorStyle: const TextStyle(
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.normal,
-              color: ColorPalette.errorColor,
-              fontSize: 12,
-            ),
-            errorMaxLines: 2,
-            suffixIcon: IconButton(
-              color: ColorPalette.primary,
-              onPressed: () {
-                setState(() {
-                  if (labelText == "Create Password") {
-                    createPasswordVisible = !createPasswordVisible;
-                  } else if (labelText == "Confirm Password") {
-                    confirmPassVisible = !confirmPassVisible;
-                  }
-                });
-              },
-              icon: Icon(
-                  passwordVisible ? Icons.visibility : Icons.visibility_off),
-            ),
-          ),
-          style: const TextStyle(
-            color: ColorPalette.accentBlack,
-            fontFamily: 'Montserrat',
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
     );
   }
 
@@ -296,7 +213,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         String name =
             "${firstNameController.text.trim()} ${lastNameController.text.trim()}";
         String birthday = birthdayController.text.trim();
-        String userId = studentIdController.text.trim();
+        String userId =
+            "${studentIdController1.text.trim()}-${studentIdController2.text.trim()}-${studentIdController3.text.trim()}";
         String phoneNumber = phoneNumberController.text.trim();
         String email = emailAddressController.text.trim();
         String password = confirmPasswordController.text.trim();
@@ -365,7 +283,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void dispose() {
     firstNameController.dispose();
     birthdayController.dispose();
-    studentIdController.dispose();
+    studentIdController1.dispose();
+    studentIdController2.dispose();
+    studentIdController3.dispose();
     phoneNumberController.dispose();
     emailAddressController.dispose();
     passwordController.dispose();
