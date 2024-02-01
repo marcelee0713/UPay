@@ -38,7 +38,6 @@ class NotificationLoading extends StatelessWidget {
           ],
           onPlay: (controller) => controller.repeat(),
         );
-        ;
       },
     );
   }

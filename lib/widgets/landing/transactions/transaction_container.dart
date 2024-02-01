@@ -5,7 +5,6 @@ import 'package:citefest/widgets/landing/transactions/transaction.box.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_box_loading.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_empty.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_error.dart';
-import 'package:citefest/widgets/notifications/notification_empty.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
