@@ -52,13 +52,18 @@ class _LandingPageState extends State<LandingPage> {
                 filePath: "assets/images/icons/top-up.png",
                 iconHeight: 28,
                 iconWidth: 28,
-                onTap: () {},
+                onTap: () {
+                  debugPrint("Tapped");
+                },
               ),
               const SizedBox(width: 10),
               LandingButton(
                 buttonName: "Transfer",
                 filePath: "assets/images/icons/transfer.png",
-                onTap: () {},
+                onTap: () {
+                  debugPrint("Tapped");
+                  Navigator.pushNamed(context, "/transfer_to_page");
+                },
                 iconHeight: 25,
                 iconWidth: 25,
               ),

@@ -9,6 +9,7 @@ import 'package:citefest/pages/receipt_page.dart';
 import 'package:citefest/pages/registration_page.dart';
 import 'package:citefest/pages/start_page.dart';
 import 'package:citefest/pages/testpage.dart';
+import 'package:citefest/pages/transfer_to_page.dart';
 import 'package:citefest/utils/index_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,8 @@ class MyApp extends StatelessWidget {
         "/": (context) => const PageHandler(),
         "/receipt_page": (context) =>
             const ReceiptPage(), // Possibly make a necessary properties for this page.
+        "/transfer_to_page": (context) =>
+            const TransferTo(),
         "/testpage": (context) => const TestPage(),
       },
     );
