@@ -1,8 +1,11 @@
+import 'package:citefest/api/analytics_data.dart';
+import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/utils/index_provider.dart';
 import 'package:citefest/widgets/analytics/modes_button.dart';
 import 'package:citefest/widgets/universal/sub_section_info.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -17,9 +20,11 @@ class AnalyticsPage extends StatefulWidget {
 class _AnalyticsPageState extends State<AnalyticsPage> {
   late List<ExpenseData> _chartData;
   late List<WeeklyExpensesData> columnData;
+  User? user = getUser();
 
   @override
   void initState() {
+    getDailyExpensesData(uid: user!.uid);
     _chartData = getChartData();
     columnData = getColumnData();
     super.initState();
@@ -274,10 +279,6 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     final List<ExpenseData> chartData = [
       ExpenseData('Jan', 1000),
       ExpenseData('Feb', 200),
-      ExpenseData('March', 534),
-      ExpenseData('Apr', 754),
-      ExpenseData('May', 155),
-      ExpenseData('Jun', 547),
     ];
 
     return chartData;
