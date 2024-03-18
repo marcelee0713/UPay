@@ -1,5 +1,5 @@
-import 'package:citefest/pages/enter_mpin_page.dart';
-import 'package:citefest/pages/start_page.dart';
+import 'package:citefest/pages/auth/enter_mpin_page.dart';
+import 'package:citefest/pages/auth/start_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
