@@ -4,7 +4,7 @@ import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/auth/auth_info.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
 import 'package:flutter/material.dart';
-import '../widgets/universal/dialog_loading.dart';
+import '../../widgets/universal/dialog_loading.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

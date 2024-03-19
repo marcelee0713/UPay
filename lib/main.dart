@@ -1,13 +1,13 @@
 import 'package:citefest/auth_check.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/firebase_options.dart';
-import 'package:citefest/pages/create_mpin_page.dart';
-import 'package:citefest/pages/enter_mpin_page.dart';
-import 'package:citefest/pages/log_in_page.dart';
+import 'package:citefest/pages/auth/create_mpin_page.dart';
+import 'package:citefest/pages/auth/enter_mpin_page.dart';
+import 'package:citefest/pages/auth/log_in_page.dart';
 import 'package:citefest/pages/page_handler.dart';
 import 'package:citefest/pages/receipt_page.dart';
-import 'package:citefest/pages/registration_page.dart';
-import 'package:citefest/pages/start_page.dart';
+import 'package:citefest/pages/auth/registration_page.dart';
+import 'package:citefest/pages/auth/start_page.dart';
 import 'package:citefest/pages/testpage.dart';
 import 'package:citefest/pages/transfer_to_page.dart';
 import 'package:citefest/utils/index_provider.dart';
@@ -62,8 +62,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const PageHandler(),
         "/receipt_page": (context) =>
             const ReceiptPage(), // Possibly make a necessary properties for this page.
-        "/transfer_to_page": (context) =>
-            const TransferTo(),
+        "/transfer_to_page": (context) => const TransferTo(),
         "/testpage": (context) => const TestPage(),
       },
     );

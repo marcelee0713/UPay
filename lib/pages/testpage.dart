@@ -1,10 +1,10 @@
 import 'package:citefest/constants/colors.dart';
-import 'package:citefest/pages/enter_mpin_page.dart';
-import 'package:citefest/pages/log_in_page.dart';
-import 'package:citefest/pages/create_mpin_page.dart';
+import 'package:citefest/pages/auth/enter_mpin_page.dart';
+import 'package:citefest/pages/auth/log_in_page.dart';
+import 'package:citefest/pages/auth/create_mpin_page.dart';
 import 'package:citefest/pages/receipt_page.dart';
-import 'package:citefest/pages/registration_page.dart';
-import 'package:citefest/pages/start_page.dart';
+import 'package:citefest/pages/auth/registration_page.dart';
+import 'package:citefest/pages/auth/start_page.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatefulWidget {
