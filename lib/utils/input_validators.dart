@@ -86,3 +86,11 @@ String? cfrmPassValidator(
     return "Password not match";
   }
 }
+
+String? centavosValidator(String? value) {
+  if (value != null && value.isEmpty) return "Amount is required";
+
+  if (value!.contains(".")) return "Enter an amount without centavos";
+
+  return null;
+}

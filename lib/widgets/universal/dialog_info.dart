@@ -52,17 +52,17 @@ class DialogInfo {
                     Text(
                       subText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: ColorPalette.accentBlack,
-                        overflow: subText.length >= 55
-                            ? TextOverflow.ellipsis
-                            : TextOverflow.visible,
+                        // overflow: subText.length >= 55
+                        //     ? TextOverflow.ellipsis
+                        //     : TextOverflow.visible,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         fontSize: 11,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(

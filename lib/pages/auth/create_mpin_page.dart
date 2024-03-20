@@ -106,6 +106,7 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
                       phoneNumber: phoneNumber,
                       balance: "0",
                       salt: salt,
+                      upoints: "0",
                     );
 
                     AuthResult res =
