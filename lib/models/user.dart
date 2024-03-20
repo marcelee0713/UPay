@@ -15,6 +15,7 @@ class UserModel {
   String phoneNumber;
   String balance;
   String salt;
+  String upoints;
 
   UserModel({
     required this.name,
@@ -25,6 +26,7 @@ class UserModel {
     required this.phoneNumber,
     required this.balance,
     required this.salt,
+    required this.upoints,
   });
 
   factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -38,6 +40,7 @@ class UserModel {
       name: data['name'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       studentNumber: data['studentNumber'] ?? '',
+      upoints: data['upoints'] ?? '',
     );
   }
 
@@ -50,6 +53,7 @@ class UserModel {
         phoneNumber: json["phoneNumber"],
         balance: json["balance"],
         salt: json["salt"],
+        upoints: json["upoints"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +65,6 @@ class UserModel {
         "phoneNumber": phoneNumber,
         "balance": balance,
         "salt": salt,
+        "upoints": upoints,
       };
 }

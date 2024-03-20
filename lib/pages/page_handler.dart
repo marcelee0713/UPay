@@ -115,10 +115,9 @@ class _PageHandlerState extends State<PageHandler> {
               onPressed: () {},
               backgroundColor: ColorPalette.primary,
               child: Image.asset(
-                "assets/images/icons/scan.png",
-                height: 30,
-                width: 30,
-                color: ColorPalette.accentWhite,
+                "assets/images/icons/upayofficiallogo.png",
+                height: 40,
+                width: 40,
               ),
             ),
           ),

@@ -17,17 +17,21 @@ class ReceiptPage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             const SizedBox(height: 20),
-            ArrowBack(onTap: () => Navigator.pop(context)),
-            const SizedBox(height: 2.5),
-            const Text(
-              "Transfer",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: ColorPalette.accentBlack,
-              ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                    child: ArrowBack(onTap: () => Navigator.pop(context))),
+                const Text(
+                  "Transfer",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: ColorPalette.accentBlack,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Container(

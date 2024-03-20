@@ -50,30 +50,30 @@ class _LandingPageState extends State<LandingPage> {
               LandingButton(
                 buttonName: "Top Up",
                 filePath: "assets/images/icons/top-up.png",
-                iconHeight: 28,
-                iconWidth: 28,
+                iconHeight: 20,
+                iconWidth: 20,
                 onTap: () {
-                  debugPrint("Tapped");
+                  Navigator.pushNamed(context, "/top_up_page");
                 },
               ),
               const SizedBox(width: 10),
               LandingButton(
-                buttonName: "Transfer",
-                filePath: "assets/images/icons/transfer.png",
+                buttonName: "Deposit",
+                filePath: "assets/images/icons/deposit.png",
                 onTap: () {
                   debugPrint("Tapped");
                   Navigator.pushNamed(context, "/transfer_to_page");
                 },
-                iconHeight: 25,
-                iconWidth: 25,
+                iconHeight: 20,
+                iconWidth: 20,
               ),
               const SizedBox(width: 10),
               LandingButton(
-                buttonName: "Rewards",
-                filePath: "assets/images/icons/coins.png",
+                buttonName: "Withdraw",
+                filePath: "assets/images/icons/withdrawal.png",
                 onTap: () {},
-                iconHeight: 21,
-                iconWidth: 21,
+                iconHeight: 20,
+                iconWidth: 20,
               ),
             ],
           ),

@@ -6,11 +6,17 @@ class BasicTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final Function(String) validator;
+  final Function(String)? onChange;
+  final String? hintText;
+  final TextInputType? inputType;
   const BasicTextField(
       {super.key,
       required this.labelText,
       required this.controller,
-      required this.validator});
+      required this.validator,
+      this.hintText,
+      this.inputType,
+      this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,11 @@ class BasicTextField extends StatelessWidget {
           validator: (value) {
             return validator(controller.text);
           },
+          onChanged: (value) {
+            if (onChange == null) return;
+            onChange!(value);
+          },
+          keyboardType: inputType,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 15, vertical: 18.5),
@@ -48,6 +59,13 @@ class BasicTextField extends StatelessWidget {
               fontWeight: FontWeight.normal,
               color: ColorPalette.errorColor,
               fontSize: 12,
+            ),
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              color: ColorPalette.accentBlack,
+              fontFamily: 'Montserrat',
+              fontSize: 11.5,
+              fontWeight: FontWeight.w300,
             ),
           ),
           style: const TextStyle(

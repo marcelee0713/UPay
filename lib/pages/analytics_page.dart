@@ -3,6 +3,7 @@ import 'package:citefest/api/auth.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/models/analytics.dart';
 import 'package:citefest/utils/index_provider.dart';
+import 'package:citefest/widgets/analytics/analytics_empty.dart';
 import 'package:citefest/widgets/analytics/modes_button.dart';
 import 'package:citefest/widgets/universal/sub_section_info.dart';
 import 'package:citefest/widgets/universal/user_status_bar.dart';
@@ -104,6 +105,10 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
               }
 
               monthlyExpenses = snapshot.data!;
+
+              if (monthlyExpenses.isEmpty) {
+                return const EmptyAnalytics();
+              }
 
               return Column(
                 children: [
@@ -260,6 +265,10 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                   }
 
                   dailyExpenses = snapshot.data!;
+
+                  if (dailyExpenses.isEmpty) {
+                    return const EmptyAnalytics();
+                  }
 
                   return SfCartesianChart(
                     trackballBehavior: TrackballBehavior(
