@@ -6,12 +6,14 @@ class AmountPickerBox extends StatefulWidget {
   final int index;
   final String amount;
   final VoidCallback onTap;
+  final String transacFee;
   const AmountPickerBox({
     super.key,
     required this.currentIndex,
     required this.index,
     required this.amount,
     required this.onTap,
+    required this.transacFee,
   });
 
   @override
@@ -51,9 +53,8 @@ class _AmountPickerBoxState extends State<AmountPickerBox> {
                 ),
               ),
               const SizedBox(height: 5),
-              // TODO: Make sure to track the transaction fee
               Text(
-                "+P10 Transaction Fee",
+                "+P${widget.transacFee} Transaction Fee",
                 style: TextStyle(
                   color: isPicked
                       ? ColorPalette.accentWhite

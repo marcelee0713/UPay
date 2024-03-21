@@ -1,4 +1,5 @@
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/models/transactions.dart';
 import 'package:citefest/pages/auth/enter_mpin_page.dart';
 import 'package:citefest/pages/auth/log_in_page.dart';
 import 'package:citefest/pages/auth/create_mpin_page.dart';
@@ -55,8 +56,33 @@ class _TestPageState extends State<TestPage> {
               child: const Text("Create MPIN Page"),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ReceiptPage())),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReceiptPage(
+                    data: TransactionModel(
+                        type: "Top Up",
+                        desc:
+                            "You've successfully sent money to 03-2122-034361",
+                        amount: "15000",
+                        senderLeftHeadText: "From",
+                        senderLeftSubText: "E-Wallet",
+                        senderRightHeadText: "Marcel Paolo Magbual",
+                        senderRightSubText: "UPay",
+                        recipientLeftHeadText: "To",
+                        recipientLeftSubText: "E-Wallet",
+                        recipientRightHeadText: "Juan Turtle",
+                        recipientRightSubText: "UPay",
+                        time: "10:34 am",
+                        pointsEarned: "12.00",
+                        uid: '',
+                        createdAt: '',
+                        amountType: '',
+                        recipient: ''),
+                    onExit: () => {},
+                  ),
+                ),
+              ),
               child: const Text("Receipt Page"),
             ),
           ],

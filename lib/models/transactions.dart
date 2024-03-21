@@ -16,6 +16,17 @@ class TransactionModel {
   String type;
   String recipient;
   String? note;
+  String desc;
+  String time;
+  String pointsEarned;
+  String senderLeftHeadText;
+  String senderLeftSubText;
+  String senderRightHeadText;
+  String senderRightSubText;
+  String recipientLeftHeadText;
+  String recipientLeftSubText;
+  String recipientRightHeadText;
+  String recipientRightSubText;
 
   TransactionModel({
     required this.uid,
@@ -25,6 +36,17 @@ class TransactionModel {
     required this.type,
     required this.recipient,
     this.note,
+    required this.desc,
+    required this.time,
+    required this.pointsEarned,
+    required this.senderLeftHeadText,
+    required this.senderLeftSubText,
+    required this.senderRightHeadText,
+    required this.senderRightSubText,
+    required this.recipientLeftHeadText,
+    required this.recipientLeftSubText,
+    required this.recipientRightHeadText,
+    required this.recipientRightSubText,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -35,7 +57,18 @@ class TransactionModel {
         amountType: json["amountType"],
         type: json["type"],
         recipient: json["recipient"],
-        note: json["note"] ?? "",
+        note: json["note"],
+        desc: json["desc"],
+        time: json["time"],
+        pointsEarned: json["pointsEarned"],
+        senderLeftHeadText: json["senderLeftHeadText"],
+        senderLeftSubText: json["senderLeftSubText"],
+        senderRightHeadText: json["senderRightHeadText"],
+        senderRightSubText: json["senderRightSubText"],
+        recipientLeftHeadText: json["recipientLeftHeadText"],
+        recipientLeftSubText: json["recipientLeftSubText"],
+        recipientRightHeadText: json["recipientRightHeadText"],
+        recipientRightSubText: json["recipientRightSubText"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +79,17 @@ class TransactionModel {
         "type": type,
         "recipient": recipient,
         "note": note,
+        "desc": desc,
+        "time": time,
+        "pointsEarned": pointsEarned,
+        "senderLeftHeadText": senderLeftHeadText,
+        "senderLeftSubText": senderLeftSubText,
+        "senderRightHeadText": senderRightHeadText,
+        "senderRightSubText": senderRightSubText,
+        "recipientLeftHeadText": recipientLeftHeadText,
+        "recipientLeftSubText": recipientLeftSubText,
+        "recipientRightHeadText": recipientRightHeadText,
+        "recipientRightSubText": recipientRightSubText,
       };
 
   factory TransactionModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -58,6 +102,17 @@ class TransactionModel {
       type: data['type'],
       recipient: data['recipient'],
       note: data['note'] ?? '',
+      desc: data['desc'],
+      time: data['time'],
+      pointsEarned: data['pointsEarned'],
+      senderLeftHeadText: data['senderLeftHeadText'],
+      senderLeftSubText: data['senderLeftSubText'],
+      senderRightHeadText: data['senderRightHeadText'],
+      senderRightSubText: data['senderRightSubText'],
+      recipientLeftHeadText: data['recipientLeftHeadText'],
+      recipientLeftSubText: data['recipientLeftSubText'],
+      recipientRightHeadText: data['recipientRightHeadText'],
+      recipientRightSubText: data['recipientRightSubText'],
     );
   }
 }

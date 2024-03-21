@@ -78,12 +78,12 @@ class _LandingPageState extends State<LandingPage> {
             ],
           ),
           const SizedBox(height: 30),
-          Column(
+          const Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     "Recent Transactions",
                     style: TextStyle(
@@ -95,8 +95,8 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 15),
-              const TransactionContainer()
+              SizedBox(height: 15),
+              TransactionContainer()
             ],
           ),
           const SizedBox(height: 20),

@@ -3,7 +3,9 @@ import 'package:citefest/api/top_up.dart';
 import 'package:citefest/constants/borders.dart';
 import 'package:citefest/constants/colors.dart';
 import 'package:citefest/models/top_up_model.dart';
+import 'package:citefest/pages/receipt_page.dart';
 import 'package:citefest/utils/input_validators.dart';
+import 'package:citefest/utils/transaction_fee_handler.dart';
 import 'package:citefest/widgets/registration/student_id.dart';
 import 'package:citefest/widgets/registration/text_field.dart';
 import 'package:citefest/widgets/topup/amount_picker_box.dart';
@@ -21,6 +23,7 @@ class TopUpPage extends StatefulWidget {
 }
 
 class _TopUpPageState extends State<TopUpPage> {
+  String transactionFee = "0";
   TextEditingController studentIdController1 = TextEditingController();
   TextEditingController studentIdController2 = TextEditingController();
   TextEditingController studentIdController3 = TextEditingController();
@@ -34,7 +37,17 @@ class _TopUpPageState extends State<TopUpPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  User? user = getUser();
+  User? user;
+
+  @override
+  void initState() {
+    user = getUser();
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getTransactionFee();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,6 +108,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 0,
                     amount: "50.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 0;
                       amountController.text = "50";
@@ -108,6 +122,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 1,
                     amount: "100.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 1;
                       amountController.text = "100";
@@ -125,6 +140,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 2,
                     amount: "200.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 2;
                       amountController.text = "200";
@@ -138,6 +154,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 3,
                     amount: "500.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 3;
                       amountController.text = "500";
@@ -155,6 +172,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 4,
                     amount: "800.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 4;
                       amountController.text = "800";
@@ -168,6 +186,7 @@ class _TopUpPageState extends State<TopUpPage> {
                     currentIndex: currentIndex,
                     index: 5,
                     amount: "1000.00",
+                    transacFee: transactionFee,
                     onTap: () => setState(() {
                       currentIndex = 5;
                       amountController.text = "1000";
@@ -267,7 +286,7 @@ class _TopUpPageState extends State<TopUpPage> {
                   String moneyToSend = amountController.text.trim();
                   String totalExpenses =
                       (int.parse(amountController.text.trim()) +
-                              10) // TODO: Add the transaction fee here.
+                              int.parse(transactionFee))
                           .toString();
                   String notes = notesController.text.trim();
                   debugPrint(receiverStudentNumber);
@@ -294,26 +313,28 @@ class _TopUpPageState extends State<TopUpPage> {
                         senderUid: user!.uid,
                         moneyToSend: moneyToSend,
                         totalExpenses: totalExpenses,
-                        transactionFee: "10", // TODO: Transaction Fee Here
+                        transactionFee: transactionFee,
+                        note: notes,
                       );
 
                       await topUp(data: data).then(
                         (value) {
                           Navigator.of(context, rootNavigator: true).pop();
-                          // TODO: Replace with an actual receipt page over here!
-                          DialogInfo(
-                            headerText: "Success",
-                            subText: "Replace me soon with a receipt instead!",
-                            confirmText: "Okay",
-                            onCancel: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                              Navigator.pop(context);
-                            },
-                            onConfirm: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                              Navigator.pop(context);
-                            },
-                          ).build(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReceiptPage(
+                                data: value,
+                                onExit: () {
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    "/",
+                                    (route) => false,
+                                  );
+                                },
+                              ),
+                            ),
+                          );
                         },
                       ).catchError(
                         (err) {
@@ -357,6 +378,13 @@ class _TopUpPageState extends State<TopUpPage> {
         ),
       ),
     );
+  }
+
+  void getTransactionFee() async {
+    String fetchedFee = await fetchTransactionFee(uid: user!.uid);
+    setState(() {
+      transactionFee = fetchedFee;
+    });
   }
 
   @override

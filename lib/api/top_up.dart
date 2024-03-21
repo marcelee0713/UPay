@@ -2,11 +2,11 @@ import 'package:citefest/api/transactions.dart';
 import 'package:citefest/models/top_up_model.dart';
 import 'package:citefest/models/transactions.dart';
 import 'package:citefest/models/user.dart';
+import 'package:citefest/utils/transaction_fee_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Future<void> topUp({required TopUpModel data}) async {
+Future<TransactionModel> topUp({required TopUpModel data}) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   try {
@@ -53,8 +53,8 @@ Future<void> topUp({required TopUpModel data}) async {
 
     if (senderAfterBalance < 0) throw "Not enough balance";
 
-    double senderEarnedPoints = double.parse(sender.upoints) +
-        (20 / 100) * int.parse(data.transactionFee);
+    double senderEarnedPoints =
+        double.parse(sender.upoints) + 0.2 * int.parse(data.transactionFee);
 
     String receiverUpdatedBalance =
         (double.parse(receiver.balance) + double.parse(data.moneyToSend))
@@ -66,11 +66,14 @@ Future<void> topUp({required TopUpModel data}) async {
 
     await db.collection("users").doc(data.senderUid).set(sender.toJson());
     await db.collection("users").doc(receiverUid).set(receiver.toJson());
+    await updateTransactionDate(userData: sender, uid: data.senderUid);
+    await updateTransactionCount(userData: sender, uid: data.senderUid);
 
     // Set sender's user points base on the transaction fee
     DateTime now = DateTime.now();
 
     String formattedDate = DateFormat('MMM dd yyyy').format(now);
+    String formattedTime = DateFormat('h:mm a').format(now);
 
     TransactionModel senderTransaction = TransactionModel(
       uid: data.senderUid,
@@ -80,6 +83,17 @@ Future<void> topUp({required TopUpModel data}) async {
       type: "Top up",
       recipient: receiver.name,
       note: "",
+      desc: "You've successfully sent money to ${receiver.studentNumber}",
+      time: formattedTime,
+      pointsEarned: (0.2 * int.parse(data.transactionFee)).toString(),
+      senderLeftHeadText: "From",
+      senderLeftSubText: "E-Wallet",
+      senderRightHeadText: sender.name,
+      senderRightSubText: "UPay",
+      recipientLeftHeadText: "To",
+      recipientLeftSubText: "E-Wallet",
+      recipientRightHeadText: receiver.name,
+      recipientRightSubText: "UPay",
     );
 
     TransactionModel receiverTransaction = TransactionModel(
@@ -90,10 +104,23 @@ Future<void> topUp({required TopUpModel data}) async {
       type: "Top up",
       recipient: sender.name,
       note: data.note ?? "",
+      desc: "You received money from ${sender.studentNumber}",
+      time: formattedTime,
+      pointsEarned: '',
+      senderLeftHeadText: "From",
+      senderLeftSubText: "E-Wallet",
+      senderRightHeadText: sender.name,
+      senderRightSubText: "UPay",
+      recipientLeftHeadText: "To",
+      recipientLeftSubText: "E-Wallet",
+      recipientRightHeadText: receiver.name,
+      recipientRightSubText: "UPay",
     );
 
     await apiSetTransactions(transaction: senderTransaction);
     await apiSetTransactions(transaction: receiverTransaction);
+
+    return senderTransaction;
   } catch (err) {
     if (err is FirebaseException) {
       throw "Error: ${err.message}";
