@@ -83,29 +83,32 @@ class TransactionBox extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 25),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    recipient,
-                    style: const TextStyle(
-                      color: ColorPalette.accentBlack,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      recipient,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: ColorPalette.accentBlack,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(
-                    type,
-                    style: const TextStyle(
-                      color: ColorPalette.accentBlack,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
+                    Text(
+                      type,
+                      style: const TextStyle(
+                        color: ColorPalette.accentBlack,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Expanded(
                 child: Align(

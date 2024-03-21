@@ -110,15 +110,21 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 return const EmptyAnalytics();
               }
 
+              if (monthlyExpenses.length <= markerToExpand) {
+                markerToExpand = monthlyExpenses.length - 1;
+              }
+
               return Column(
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        "this month you've spent",
-                        style: TextStyle(
+                      Text(
+                        currentSection == "expenses"
+                            ? "this month you've spent"
+                            : "this month you've earned",
+                        style: const TextStyle(
                           color: ColorPalette.accentBlack,
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.w300,

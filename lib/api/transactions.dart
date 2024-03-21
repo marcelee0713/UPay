@@ -26,6 +26,20 @@ Future<TransactionsRes?> apiGetTransactions({required String uid}) async {
   }
 }
 
+Future<void> apiSetTransactions({required TransactionModel transaction}) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  try {
+    await db.collection("transactions").add(transaction.toJson());
+  } catch (err) {
+    if (err is FirebaseException) {
+      throw "Error: ${err.message}";
+    }
+
+    throw "Error: ${err.toString()}";
+  }
+}
+
 class TransactionsRes {
   List<TransactionModel> list;
   String? errorMessage;

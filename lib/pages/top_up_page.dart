@@ -1,11 +1,16 @@
+import 'package:citefest/api/auth.dart';
+import 'package:citefest/api/top_up.dart';
 import 'package:citefest/constants/borders.dart';
 import 'package:citefest/constants/colors.dart';
+import 'package:citefest/models/top_up_model.dart';
 import 'package:citefest/utils/input_validators.dart';
 import 'package:citefest/widgets/registration/student_id.dart';
 import 'package:citefest/widgets/registration/text_field.dart';
 import 'package:citefest/widgets/topup/amount_picker_box.dart';
 import 'package:citefest/widgets/universal/auth/arrow_back.dart';
 import 'package:citefest/widgets/universal/dialog_info.dart';
+import 'package:citefest/widgets/universal/dialog_loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TopUpPage extends StatefulWidget {
@@ -29,8 +34,7 @@ class _TopUpPageState extends State<TopUpPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  // TODO: DO THE FUNCTIONALITY OF TOP UP
-  // USER TO USER OR LIKE EXPRESS SEND IN GCASH!
+  User? user = getUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -256,28 +260,78 @@ class _TopUpPageState extends State<TopUpPage> {
               ElevatedButton(
                 onPressed: () async {
                   if (!_formKey.currentState!.validate()) return;
+
                   FocusScope.of(context).unfocus();
-                  String studentNumber =
+                  String receiverStudentNumber =
                       "${studentIdController1.text.trim()}-${studentIdController2.text.trim()}-${studentIdController3.text.trim()}";
                   String moneyToSend = amountController.text.trim();
                   String totalExpenses =
                       (int.parse(amountController.text.trim()) +
-                              10) // Add the transaction fee here.
+                              10) // TODO: Add the transaction fee here.
                           .toString();
                   String notes = notesController.text.trim();
-                  debugPrint(studentNumber);
+                  debugPrint(receiverStudentNumber);
                   debugPrint(totalExpenses);
                   debugPrint(notes);
 
                   DialogInfo(
                     headerText: "Are you sure?",
                     subText:
-                        "You are going to spend a total of $totalExpenses pesos for sending $moneyToSend pesos to $studentNumber.",
+                        "You are going to spend a total of $totalExpenses pesos for sending $moneyToSend pesos to $receiverStudentNumber.",
                     confirmText: "Yes",
                     onCancel: () =>
                         Navigator.of(context, rootNavigator: true).pop(),
                     onConfirm: () async {
-                      // Make an api where it could send the p
+                      Navigator.of(context, rootNavigator: true).pop();
+
+                      DialogLoading(
+                        subtext: "Loading...",
+                        willPop: false,
+                      ).build(context);
+
+                      TopUpModel data = TopUpModel(
+                        receiverStudentNumber: receiverStudentNumber,
+                        senderUid: user!.uid,
+                        moneyToSend: moneyToSend,
+                        totalExpenses: totalExpenses,
+                        transactionFee: "10", // TODO: Transaction Fee Here
+                      );
+
+                      await topUp(data: data).then(
+                        (value) {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          // TODO: Replace with an actual receipt page over here!
+                          DialogInfo(
+                            headerText: "Success",
+                            subText: "Replace me soon with a receipt instead!",
+                            confirmText: "Okay",
+                            onCancel: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              Navigator.pop(context);
+                            },
+                            onConfirm: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              Navigator.pop(context);
+                            },
+                          ).build(context);
+                        },
+                      ).catchError(
+                        (err) {
+                          Navigator.of(context, rootNavigator: true).pop();
+
+                          DialogInfo(
+                            headerText: "Failed",
+                            subText: err.toString(),
+                            confirmText: "Try again",
+                            onCancel: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            onConfirm: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                          ).build(context);
+                        },
+                      );
                     },
                   ).build(context);
                 },

@@ -24,7 +24,7 @@ class TransactionModel {
     required this.amountType,
     required this.type,
     required this.recipient,
-    required this.note,
+    this.note,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
