@@ -107,6 +107,8 @@ class _CreateMPINPageState extends State<CreateMPINPage> {
                       balance: "0",
                       salt: salt,
                       upoints: "0",
+                      transactionCount: "0",
+                      lastTransactionDate: "",
                     );
 
                     AuthResult res =

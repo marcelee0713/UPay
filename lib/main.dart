@@ -5,7 +5,6 @@ import 'package:citefest/pages/auth/create_mpin_page.dart';
 import 'package:citefest/pages/auth/enter_mpin_page.dart';
 import 'package:citefest/pages/auth/log_in_page.dart';
 import 'package:citefest/pages/page_handler.dart';
-import 'package:citefest/pages/receipt_page.dart';
 import 'package:citefest/pages/auth/registration_page.dart';
 import 'package:citefest/pages/auth/start_page.dart';
 import 'package:citefest/pages/testpage.dart';
@@ -45,6 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: globalNavigatorKey,
+      debugShowCheckedModeBanner: false,
       title: 'UPay',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -61,8 +61,6 @@ class MyApp extends StatelessWidget {
         "/registration": (context) => const RegistrationPage(),
         "/create-mpin": (context) => const CreateMPINPage(),
         "/": (context) => const PageHandler(),
-        "/receipt_page": (context) =>
-            const ReceiptPage(), // Possibly make a necessary properties for this page.
         "/transfer_to_page": (context) => const TransferTo(),
         "/top_up_page": (context) => const TopUpPage(),
         "/testpage": (context) => const TestPage(),

@@ -1,6 +1,7 @@
 import 'package:citefest/api/auth.dart';
 import 'package:citefest/api/transactions.dart';
 import 'package:citefest/models/transactions.dart';
+import 'package:citefest/pages/receipt_page.dart';
 import 'package:citefest/widgets/landing/transactions/transaction.box.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_box_loading.dart';
 import 'package:citefest/widgets/landing/transactions/transaction_empty.dart';
@@ -51,7 +52,18 @@ class TransactionContainer extends StatelessWidget {
                   amountType: list[index].amountType,
                   amount: list[index].amount,
                   index: index,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReceiptPage(
+                            data: list[index],
+                            onExit: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    );
+                  },
                   date: list[index].createdAt,
                   recipient: list[index].recipient,
                   note: list[index].note ?? "",
