@@ -1,16 +1,18 @@
-# citefest
+# UPay
 
-A new Flutter project.
+UPay is a dedicated e-wallet application exclusively for PHINMA students. This innovative platform allows students to earn points through various activities and achievements, which can be converted into vouchers to purchase food, school essentials, and other items available around the school.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Point Earning System**: Students can earn points through academic achievements, extracurricular activities, and other school-related engagements.
+- **Voucher Conversion**: Earned points can be converted into vouchers, which can be used for purchases at the Student Plaza (SP).
+- **User-Friendly Interface**: A simple and intuitive interface designed to provide a seamless user experience.
 
-A few resources to get you started if this is your first Flutter project:
+## Technology Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Frontend**: Flutter
+- **Backend**: Firebase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Note
+
+This project was developed as part of a hackathon. As a result, most of the codebase is in a "spaghetti code" state, which means it may lack clean architecture and best practices typically found in production-quality code.
